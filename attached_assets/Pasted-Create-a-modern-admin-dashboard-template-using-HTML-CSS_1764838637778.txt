@@ -1,0 +1,57 @@
+Create a **modern admin dashboard template** using **HTML, CSS, and Bootstrap 5** with a **glassmorphism design style**.
+
+Requirements:
+1. General
+   - Use semantic HTML5.
+   - Use Bootstrap 5 (via CDN) for grid, layout, and basic components.
+   - Include a clean Google Font (e.g., "Poppins" or "Inter").
+   - The overall look should be **modern, minimal, and professional**.
+
+2. Layout
+   - A fixed **sidebar** on the left with:
+     - Logo area at the top.
+     - Navigation links with icons (e.g., Dashboard, Users, Analytics, Settings, Logout).
+     - On hover, links should have a subtle glow or background blur effect.
+   - A **top navbar/header** with:
+     - Page title (e.g., “Dashboard”).
+     - Search bar.
+     - Notification icon.
+     - User avatar/profile dropdown.
+   - Main **content area** with:
+     - A row of 3–4 **stat cards** (e.g., Total Users, Revenue, Orders, Conversion Rate).
+     - A section with a **chart placeholder** (simple card with dummy area for chart).
+     - A **table** for “Recent Users” or “Recent Orders” with columns like Name, Email, Status, Date, Actions.
+   - The layout must be **responsive**:
+     - Sidebar collapses or becomes a top menu on small screens.
+     - Cards and table stack nicely on mobile.
+
+3. Glassmorphism Style
+   - Background:
+     - Use a **gradient background** (e.g., purple/blue or teal/indigo).
+   - Cards, sidebar, and navbar:
+     - Use **transparent, frosted glass** effect:
+       - `background: rgba(255, 255, 255, 0.12)` (or similar).
+       - `backdrop-filter: blur(15px);`
+       - `border: 1px solid rgba(255, 255, 255, 0.25);`
+       - Smooth border-radius (e.g., `border-radius: 16px;`).
+   - Use subtle **box-shadow** for depth, not too heavy.
+   - Use soft hover animations (e.g., transform: translateY(-2px);).
+
+4. Colors & Typography
+   - Primary color: choose a modern gradient (e.g., #6366F1 to #22D3EE).
+   - Text color: mostly white or very light for dark backgrounds.
+   - Headings: slightly larger, bold, clean font.
+   - Use consistent spacing and padding.
+
+5. Code Structure
+   - Put everything in a single HTML file:
+     - `<head>`: Bootstrap CDN, Google Fonts, and internal `<style>` with custom CSS.
+     - `<body>`: sidebar, header, main content sections.
+   - No external JS frameworks required, only Bootstrap’s JS (via CDN) if needed for dropdowns.
+   - Add comments in the code explaining main sections:
+     - `<!-- Sidebar -->`, `<!-- Top Navbar -->`, `<!-- Stats Cards -->`, `<!-- Chart Section -->`, `<!-- Recent Users Table -->`.
+
+6. Extra polish
+   - Add simple **badge** styles for table status (e.g., Active, Pending, Blocked).
+   - Add a **dark overlay effect** behind glass cards to make them stand out.
+   - Ensure the design looks good on both 1920x1080 desktop and mobile screens.
