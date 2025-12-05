@@ -1,0 +1,1908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders - Admin Dashboard</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23015fc9'/%3E%3Cstop offset='100%25' style='stop-color:%230ce0ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='url(%23g)'/%3E%3Cpath d='M50 25L75 45L75 70L50 85L25 70L25 45Z' fill='white' opacity='0.9'/%3E%3C/svg%3E">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #015fc9 0%, #0ce0ff 100%);
+            --accent-gradient: linear-gradient(135deg, #C115EC 0%, #f5576c 100%);
+            --cyan-gradient: linear-gradient(135deg, #015fc9 0%, #0ce0ff 100%);
+            --green-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --orange-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-bg-hover: rgba(255, 255, 255, 0.12);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-border-hover: rgba(255, 255, 255, 0.25);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --sidebar-width: 280px;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.65);
+            --text-muted: rgba(255, 255, 255, 0.45);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #00022A 0%, #000D33 50%, #00022B 100%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animated {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .bg-animated .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.35;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .bg-animated .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, #015fc9, #0077e6);
+            top: -200px;
+            left: -150px;
+        }
+
+        .bg-animated .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #C115EC, #8b0ab8);
+            top: 40%;
+            right: -100px;
+            animation-delay: -5s;
+        }
+
+        .bg-animated .orb-3 {
+            width: 450px;
+            height: 450px;
+            background: linear-gradient(135deg, #0ce0ff, #00b4d8);
+            bottom: -150px;
+            left: 25%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(30px, -30px) rotate(5deg); }
+            50% { transform: translate(-20px, 20px) rotate(-5deg); }
+            75% { transform: translate(20px, 10px) rotate(3deg); }
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-right: 1px solid var(--glass-border);
+            padding: 28px 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.4s ease;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 0 12px 28px;
+            border-bottom: 1px solid var(--glass-border);
+            margin-bottom: 28px;
+        }
+
+        .sidebar-logo .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-gradient);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 8px 24px rgba(1, 95, 201, 0.5);
+        }
+
+        .sidebar-logo .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.8) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+        }
+
+        .nav-item { margin-bottom: 6px; }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-gradient);
+            border-radius: 0 4px 4px 0;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: var(--glass-bg-hover);
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .nav-link.active::before { transform: scaleY(1); }
+
+        .nav-link i {
+            font-size: 20px;
+            width: 26px;
+            text-align: center;
+        }
+
+        .nav-link span {
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--accent-gradient);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            padding-top: 20px;
+            border-top: 1px solid var(--glass-border);
+            margin-top: auto;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            padding: 28px;
+        }
+
+        /* Top Navbar */
+        .top-navbar {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 18px 28px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .page-header {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .page-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.85) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 12px 18px 12px 48px;
+            color: var(--text-primary);
+            width: 280px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input::placeholder { color: var(--text-muted); }
+
+        .search-box input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--glass-border-hover);
+            box-shadow: 0 0 30px rgba(1, 95, 201, 0.25);
+            width: 320px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        .nav-icon-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        .nav-icon-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-icon-btn .badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 22px;
+            height: 22px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(26, 26, 62, 0.8);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            padding: 8px 16px 8px 8px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .user-profile:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--glass-border);
+        }
+
+        .user-avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 16px rgba(1, 95, 201, 0.4);
+            position: relative;
+        }
+
+        .user-avatar::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            background: #43e97b;
+            border-radius: 50%;
+            border: 2px solid rgba(26, 26, 62, 0.8);
+        }
+
+        .user-info { display: none; }
+
+        @media (min-width: 768px) {
+            .user-info { display: block; }
+        }
+
+        .user-info .name {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .user-info .role {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .dropdown-menu {
+            background: rgba(20, 20, 50, 0.95);
+            backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 8px;
+            margin-top: 10px;
+            min-width: 200px;
+        }
+
+        .dropdown-item {
+            color: var(--text-secondary);
+            padding: 12px 16px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+        }
+
+        .dropdown-item i { font-size: 16px; }
+
+        .dropdown-divider {
+            border-color: var(--glass-border);
+            margin: 8px 0;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .stat-mini {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-mini:hover {
+            transform: translateY(-4px);
+            border-color: var(--glass-border-hover);
+        }
+
+        .stat-mini-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .stat-mini-icon.blue { background: var(--primary-gradient); box-shadow: 0 4px 16px rgba(1, 95, 201, 0.4); }
+        .stat-mini-icon.green { background: var(--green-gradient); box-shadow: 0 4px 16px rgba(67, 233, 123, 0.4); }
+        .stat-mini-icon.orange { background: var(--orange-gradient); box-shadow: 0 4px 16px rgba(250, 112, 154, 0.4); }
+        .stat-mini-icon.purple { background: var(--accent-gradient); box-shadow: 0 4px 16px rgba(193, 21, 236, 0.4); }
+
+        .stat-mini-content h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .stat-mini-content p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 10px 20px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--glass-bg-hover);
+            color: var(--text-primary);
+            border-color: var(--glass-border-hover);
+        }
+
+        .filter-btn.active {
+            background: var(--primary-gradient);
+            border-color: transparent;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-export {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 10px 20px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-export:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--text-primary);
+        }
+
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .custom-table th {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 16px 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .custom-table th:first-child { border-radius: 12px 0 0 0; }
+        .custom-table th:last-child { border-radius: 0 12px 0 0; }
+
+        .custom-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 14px;
+        }
+
+        .custom-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .custom-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        /* Order ID */
+        .order-id {
+            font-weight: 600;
+            color: #0ce0ff;
+        }
+
+        /* Customer Cell */
+        .customer-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .customer-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: white;
+        }
+
+        .customer-avatar.gradient-1 { background: var(--primary-gradient); }
+        .customer-avatar.gradient-2 { background: var(--green-gradient); }
+        .customer-avatar.gradient-3 { background: var(--accent-gradient); }
+        .customer-avatar.gradient-4 { background: var(--orange-gradient); }
+
+        .customer-name {
+            font-weight: 500;
+        }
+
+        /* Product Cell */
+        .product-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .product-img {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .product-info .product-name {
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .product-info .product-qty {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Status Badge */
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .status-badge.delivered {
+            background: rgba(67, 233, 123, 0.15);
+            color: #43e97b;
+        }
+        .status-badge.delivered::before { background: #43e97b; }
+
+        .status-badge.processing {
+            background: rgba(1, 95, 201, 0.15);
+            color: #0ce0ff;
+        }
+        .status-badge.processing::before { background: #0ce0ff; }
+
+        .status-badge.pending {
+            background: rgba(250, 204, 21, 0.15);
+            color: #facc15;
+        }
+        .status-badge.pending::before { background: #facc15; }
+
+        .status-badge.cancelled {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+        .status-badge.cancelled::before { background: #ef4444; }
+
+        .status-badge.shipped {
+            background: rgba(193, 21, 236, 0.15);
+            color: #C115EC;
+        }
+        .status-badge.shipped::before { background: #C115EC; }
+
+        /* Payment Badge */
+        .payment-badge {
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .payment-badge.paid {
+            background: rgba(67, 233, 123, 0.15);
+            color: #43e97b;
+        }
+
+        .payment-badge.unpaid {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        .payment-badge.refunded {
+            background: rgba(250, 204, 21, 0.15);
+            color: #facc15;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        .action-btn.view:hover {
+            background: rgba(1, 95, 201, 0.2);
+            color: #0ce0ff;
+            border-color: rgba(1, 95, 201, 0.4);
+        }
+
+        .action-btn.print:hover {
+            background: rgba(67, 233, 123, 0.2);
+            color: #43e97b;
+            border-color: rgba(67, 233, 123, 0.3);
+        }
+
+        .action-btn.delete:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        /* Pagination */
+        .pagination-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .pagination-info {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .pagination {
+            display: flex;
+            gap: 8px;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-btn:hover, .page-btn.active {
+            background: var(--primary-gradient);
+            border-color: transparent;
+            color: white;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Mobile Sidebar Toggle */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: 0 8px 32px rgba(1, 95, 201, 0.5);
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 991.98px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+            .sidebar-toggle { display: flex; align-items: center; justify-content: center; }
+            .sidebar-overlay.active { display: block; }
+        }
+
+        @media (max-width: 767.98px) {
+            .stats-row { grid-template-columns: 1fr; }
+            .search-box { display: none; }
+            .filter-bar { flex-direction: column; align-items: flex-start; }
+            .filter-tabs { overflow-x: auto; width: 100%; padding-bottom: 10px; }
+            .top-navbar { padding: 14px 18px; }
+            .glass-card { padding: 20px; }
+            .main-content { padding: 16px; }
+        }
+
+        /* Order ID Clickable */
+        .order-id {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .order-id:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        /* Offcanvas Styles */
+        .offcanvas {
+            background: linear-gradient(180deg, #00022A 0%, #000D33 100%) !important;
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+        }
+
+        .offcanvas-header {
+            padding: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .offcanvas-title {
+            color: #ffffff !important;
+            font-weight: 600;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .offcanvas-title .order-badge {
+            background: var(--primary-gradient);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .btn-close {
+            filter: invert(1);
+            opacity: 0.8;
+        }
+
+        .btn-close:hover {
+            opacity: 1;
+        }
+
+        .offcanvas-body {
+            padding: 24px;
+            color: #ffffff;
+        }
+
+        /* Quick View Sections */
+        .qv-section {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .qv-section-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .qv-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .qv-row:last-child {
+            border-bottom: none;
+        }
+
+        .qv-label {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 14px;
+        }
+
+        .qv-value {
+            font-weight: 500;
+            color: #ffffff;
+            font-size: 14px;
+        }
+
+        .qv-value.highlight {
+            color: #0ce0ff;
+        }
+
+        /* Quick View Customer */
+        .qv-customer {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .qv-customer-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 16px;
+            color: #ffffff;
+        }
+
+        .qv-customer-info .name {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #ffffff;
+        }
+
+        .qv-customer-info .email {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Quick View Product */
+        .qv-product {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .qv-product:last-child {
+            border-bottom: none;
+        }
+
+        .qv-product-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .qv-product-info {
+            flex: 1;
+        }
+
+        .qv-product-name {
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .qv-product-qty {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .qv-product-price {
+            font-weight: 600;
+            color: #43e97b;
+        }
+
+        /* Quick View Timeline */
+        .qv-timeline {
+            position: relative;
+            padding-left: 0;
+            margin-left: 4px;
+        }
+
+        .qv-timeline-item {
+            position: relative;
+            padding-left: 32px;
+            padding-bottom: 20px;
+            min-height: 50px;
+        }
+
+        .qv-timeline-item:last-child {
+            padding-bottom: 0;
+            min-height: auto;
+        }
+
+        /* Timeline dot */
+        .qv-timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            z-index: 2;
+            box-sizing: border-box;
+        }
+
+        /* Vertical line connecting dots */
+        .qv-timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 16px;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.15);
+            z-index: 1;
+        }
+
+        .qv-timeline-item:last-child::after {
+            display: none;
+        }
+
+        .qv-timeline-item.completed::before {
+            background: #43e97b;
+            border-color: #43e97b;
+        }
+
+        .qv-timeline-item.completed::after {
+            background: #43e97b;
+        }
+
+        .qv-timeline-item.current::before {
+            background: #0ce0ff;
+            border-color: #0ce0ff;
+            box-shadow: 0 0 10px rgba(12, 224, 255, 0.6);
+        }
+
+        .qv-timeline-item.current::after {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .qv-timeline-item.pending::before {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .qv-timeline-item.cancelled::before {
+            background: #f5576c;
+            border-color: #f5576c;
+        }
+
+        .qv-timeline-title {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 2px;
+            color: #ffffff;
+            line-height: 1.4;
+        }
+
+        .qv-timeline-item.pending .qv-timeline-title {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .qv-timeline-date {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .qv-timeline-item.pending .qv-timeline-date {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Quick View Actions */
+        .qv-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .qv-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .qv-btn-primary {
+            background: var(--primary-gradient);
+            border: none;
+            color: #ffffff !important;
+        }
+
+        .qv-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(1, 95, 201, 0.4);
+            color: #ffffff !important;
+        }
+
+        .qv-btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+
+        .qv-btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animated">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">
+                <i class="bi bi-hexagon-fill"></i>
+            </div>
+            <span class="logo-text">AdminPro</span>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="index.html" class="nav-link">
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="customers.html" class="nav-link">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Customers</span>
+                    <span class="nav-badge">128</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="analytics.html" class="nav-link">
+                    <i class="bi bi-bar-chart-fill"></i>
+                    <span>Analytics</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="orders.html" class="nav-link active">
+                    <i class="bi bi-cart-fill"></i>
+                    <span>Orders</span>
+                    <span class="nav-badge">24</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="bi bi-chat-dots-fill"></i>
+                    <span>Messages</span>
+                    <span class="nav-badge">7</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="bi bi-folder-fill"></i>
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="bi bi-calendar-event-fill"></i>
+                    <span>Calendar</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="bi bi-gear-fill"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="login.html" class="nav-link logout">
+                <i class="bi bi-box-arrow-left"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navbar -->
+        <nav class="top-navbar">
+            <div class="page-header">
+                <h1 class="page-title">Orders</h1>
+                <p class="page-subtitle">Manage and track all orders</p>
+            </div>
+            <div class="navbar-actions">
+                <div class="search-box">
+                    <i class="bi bi-search"></i>
+                    <input type="text" placeholder="Search orders...">
+                </div>
+                <div class="nav-icon-btn">
+                    <i class="bi bi-bell-fill"></i>
+                    <span class="badge">5</span>
+                </div>
+                <div class="nav-icon-btn d-none d-md-flex">
+                    <i class="bi bi-envelope-fill"></i>
+                </div>
+                <div class="dropdown">
+                    <div class="user-profile" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="user-avatar">JD</div>
+                        <div class="user-info">
+                            <div class="name">John Doe</div>
+                            <div class="role">Administrator</div>
+                        </div>
+                        <i class="bi bi-chevron-down ms-1 d-none d-md-block" style="font-size: 12px; color: var(--text-muted);"></i>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i>My Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i>Settings</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-question-circle"></i>Help Center</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="login.html"><i class="bi bi-box-arrow-left"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Stats Row -->
+        <div class="stats-row">
+            <div class="stat-mini">
+                <div class="stat-mini-icon blue">
+                    <i class="bi bi-cart-check-fill"></i>
+                </div>
+                <div class="stat-mini-content">
+                    <h3>1,847</h3>
+                    <p>Total Orders</p>
+                </div>
+            </div>
+            <div class="stat-mini">
+                <div class="stat-mini-icon green">
+                    <i class="bi bi-check-circle-fill"></i>
+                </div>
+                <div class="stat-mini-content">
+                    <h3>1,523</h3>
+                    <p>Completed</p>
+                </div>
+            </div>
+            <div class="stat-mini">
+                <div class="stat-mini-icon orange">
+                    <i class="bi bi-clock-fill"></i>
+                </div>
+                <div class="stat-mini-content">
+                    <h3>248</h3>
+                    <p>Processing</p>
+                </div>
+            </div>
+            <div class="stat-mini">
+                <div class="stat-mini-icon purple">
+                    <i class="bi bi-currency-dollar"></i>
+                </div>
+                <div class="stat-mini-content">
+                    <h3>$142.5K</h3>
+                    <p>Total Revenue</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Card -->
+        <div class="glass-card">
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <div class="filter-tabs">
+                    <button class="filter-btn active">All Orders</button>
+                    <button class="filter-btn">Pending</button>
+                    <button class="filter-btn">Processing</button>
+                    <button class="filter-btn">Shipped</button>
+                    <button class="filter-btn">Delivered</button>
+                    <button class="filter-btn">Cancelled</button>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn-export">
+                        <i class="bi bi-download"></i>
+                        Export
+                    </button>
+                    <button class="btn-export">
+                        <i class="bi bi-funnel"></i>
+                        Filter
+                    </button>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-container">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Product</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Payment</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="order-id" data-bs-toggle="offcanvas" data-bs-target="#orderQuickView" data-order-id="#ORD-2024-1847" data-customer="John Doe" data-customer-email="john.doe@example.com" data-product="iPhone 15 Pro" data-product-emoji="📱" data-qty="1" data-amount="$1,299.00" data-payment="Paid" data-status="delivered" data-date="Dec 5, 2024">#ORD-2024-1847</span></td>
+                            <td>
+                                <div class="customer-cell">
+                                    <div class="customer-avatar gradient-1">JD</div>
+                                    <span class="customer-name">John Doe</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="product-cell">
+                                    <div class="product-img">📱</div>
+                                    <div class="product-info">
+                                        <div class="product-name">iPhone 15 Pro</div>
+                                        <div class="product-qty">Qty: 1</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Dec 5, 2024</td>
+                            <td><strong>$1,299.00</strong></td>
+                            <td><span class="payment-badge paid">Paid</span></td>
+                            <td><span class="status-badge delivered">Delivered</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="order-details.html" class="action-btn view" title="View"><i class="bi bi-eye"></i></a>
+                                    <button class="action-btn print" title="Print"><i class="bi bi-printer"></i></button>
+                                    <button class="action-btn delete" title="Delete"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="order-id" data-bs-toggle="offcanvas" data-bs-target="#orderQuickView" data-order-id="#ORD-2024-1846" data-customer="Sarah Miller" data-customer-email="sarah.miller@example.com" data-product="MacBook Pro 14&quot;" data-product-emoji="💻" data-qty="1" data-amount="$2,499.00" data-payment="Paid" data-status="shipped" data-date="Dec 5, 2024">#ORD-2024-1846</span></td>
+                            <td>
+                                <div class="customer-cell">
+                                    <div class="customer-avatar gradient-2">SM</div>
+                                    <span class="customer-name">Sarah Miller</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="product-cell">
+                                    <div class="product-img">💻</div>
+                                    <div class="product-info">
+                                        <div class="product-name">MacBook Pro 14"</div>
+                                        <div class="product-qty">Qty: 1</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Dec 5, 2024</td>
+                            <td><strong>$2,499.00</strong></td>
+                            <td><span class="payment-badge paid">Paid</span></td>
+                            <td><span class="status-badge shipped">Shipped</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="order-details.html" class="action-btn view" title="View"><i class="bi bi-eye"></i></a>
+                                    <button class="action-btn print" title="Print"><i class="bi bi-printer"></i></button>
+                                    <button class="action-btn delete" title="Delete"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="order-id" data-bs-toggle="offcanvas" data-bs-target="#orderQuickView" data-order-id="#ORD-2024-1845" data-customer="Mike Johnson" data-customer-email="mike.johnson@example.com" data-product="AirPods Pro 2" data-product-emoji="🎧" data-qty="2" data-amount="$498.00" data-payment="Paid" data-status="processing" data-date="Dec 4, 2024">#ORD-2024-1845</span></td>
+                            <td>
+                                <div class="customer-cell">
+                                    <div class="customer-avatar gradient-3">MJ</div>
+                                    <span class="customer-name">Mike Johnson</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="product-cell">
+                                    <div class="product-img">🎧</div>
+                                    <div class="product-info">
+                                        <div class="product-name">AirPods Pro 2</div>
+                                        <div class="product-qty">Qty: 2</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Dec 4, 2024</td>
+                            <td><strong>$498.00</strong></td>
+                            <td><span class="payment-badge paid">Paid</span></td>
+                            <td><span class="status-badge processing">Processing</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="order-details.html" class="action-btn view" title="View"><i class="bi bi-eye"></i></a>
+                                    <button class="action-btn print" title="Print"><i class="bi bi-printer"></i></button>
+                                    <button class="action-btn delete" title="Delete"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="order-id" data-bs-toggle="offcanvas" data-bs-target="#orderQuickView" data-order-id="#ORD-2024-1844" data-customer="Emily Williams" data-customer-email="emily.williams@example.com" data-product="Apple Watch Ultra" data-product-emoji="⌚" data-qty="1" data-amount="$799.00" data-payment="Unpaid" data-status="pending" data-date="Dec 4, 2024">#ORD-2024-1844</span></td>
+                            <td>
+                                <div class="customer-cell">
+                                    <div class="customer-avatar gradient-4">EW</div>
+                                    <span class="customer-name">Emily Williams</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="product-cell">
+                                    <div class="product-img">⌚</div>
+                                    <div class="product-info">
+                                        <div class="product-name">Apple Watch Ultra</div>
+                                        <div class="product-qty">Qty: 1</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Dec 4, 2024</td>
+                            <td><strong>$799.00</strong></td>
+                            <td><span class="payment-badge unpaid">Unpaid</span></td>
+                            <td><span class="status-badge pending">Pending</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="order-details.html" class="action-btn view" title="View"><i class="bi bi-eye"></i></a>
+                                    <button class="action-btn print" title="Print"><i class="bi bi-printer"></i></button>
+                                    <button class="action-btn delete" title="Delete"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="order-id" data-bs-toggle="offcanvas" data-bs-target="#orderQuickView" data-order-id="#ORD-2024-1843" data-customer="Robert Brown" data-customer-email="robert.brown@example.com" data-product="iMac 24&quot; M3" data-product-emoji="🖥️" data-qty="1" data-amount="$1,499.00" data-payment="Refunded" data-status="cancelled" data-date="Dec 3, 2024">#ORD-2024-1843</span></td>
+                            <td>
+                                <div class="customer-cell">
+                                    <div class="customer-avatar gradient-1">RB</div>
+                                    <span class="customer-name">Robert Brown</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="product-cell">
+                                    <div class="product-img">🖥️</div>
+                                    <div class="product-info">
+                                        <div class="product-name">iMac 24" M3</div>
+                                        <div class="product-qty">Qty: 1</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Dec 3, 2024</td>
+                            <td><strong>$1,499.00</strong></td>
+                            <td><span class="payment-badge refunded">Refunded</span></td>
+                            <td><span class="status-badge cancelled">Cancelled</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="order-details.html" class="action-btn view" title="View"><i class="bi bi-eye"></i></a>
+                                    <button class="action-btn print" title="Print"><i class="bi bi-printer"></i></button>
+                                    <button class="action-btn delete" title="Delete"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="order-id" data-bs-toggle="offcanvas" data-bs-target="#orderQuickView" data-order-id="#ORD-2024-1842" data-customer="Jennifer Clark" data-customer-email="jennifer.clark@example.com" data-product="iPad Pro 12.9&quot;" data-product-emoji="📱" data-qty="1" data-amount="$1,099.00" data-payment="Paid" data-status="delivered" data-date="Dec 3, 2024">#ORD-2024-1842</span></td>
+                            <td>
+                                <div class="customer-cell">
+                                    <div class="customer-avatar gradient-2">JC</div>
+                                    <span class="customer-name">Jennifer Clark</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="product-cell">
+                                    <div class="product-img">📱</div>
+                                    <div class="product-info">
+                                        <div class="product-name">iPad Pro 12.9"</div>
+                                        <div class="product-qty">Qty: 1</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Dec 3, 2024</td>
+                            <td><strong>$1,099.00</strong></td>
+                            <td><span class="payment-badge paid">Paid</span></td>
+                            <td><span class="status-badge delivered">Delivered</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="order-details.html" class="action-btn view" title="View"><i class="bi bi-eye"></i></a>
+                                    <button class="action-btn print" title="Print"><i class="bi bi-printer"></i></button>
+                                    <button class="action-btn delete" title="Delete"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="order-id" data-bs-toggle="offcanvas" data-bs-target="#orderQuickView" data-order-id="#ORD-2024-1841" data-customer="David Lee" data-customer-email="david.lee@example.com" data-product="PlayStation 5" data-product-emoji="🎮" data-qty="1" data-amount="$499.00" data-payment="Paid" data-status="shipped" data-date="Dec 2, 2024">#ORD-2024-1841</span></td>
+                            <td>
+                                <div class="customer-cell">
+                                    <div class="customer-avatar gradient-3">DL</div>
+                                    <span class="customer-name">David Lee</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="product-cell">
+                                    <div class="product-img">🎮</div>
+                                    <div class="product-info">
+                                        <div class="product-name">PlayStation 5</div>
+                                        <div class="product-qty">Qty: 1</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Dec 2, 2024</td>
+                            <td><strong>$499.00</strong></td>
+                            <td><span class="payment-badge paid">Paid</span></td>
+                            <td><span class="status-badge shipped">Shipped</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="order-details.html" class="action-btn view" title="View"><i class="bi bi-eye"></i></a>
+                                    <button class="action-btn print" title="Print"><i class="bi bi-printer"></i></button>
+                                    <button class="action-btn delete" title="Delete"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="order-id" data-bs-toggle="offcanvas" data-bs-target="#orderQuickView" data-order-id="#ORD-2024-1840" data-customer="Amanda Taylor" data-customer-email="amanda.taylor@example.com" data-product="HomePod Mini" data-product-emoji="🔊" data-qty="3" data-amount="$297.00" data-payment="Paid" data-status="processing" data-date="Dec 2, 2024">#ORD-2024-1840</span></td>
+                            <td>
+                                <div class="customer-cell">
+                                    <div class="customer-avatar gradient-4">AT</div>
+                                    <span class="customer-name">Amanda Taylor</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="product-cell">
+                                    <div class="product-img">🔊</div>
+                                    <div class="product-info">
+                                        <div class="product-name">HomePod Mini</div>
+                                        <div class="product-qty">Qty: 3</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Dec 2, 2024</td>
+                            <td><strong>$297.00</strong></td>
+                            <td><span class="payment-badge paid">Paid</span></td>
+                            <td><span class="status-badge processing">Processing</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="order-details.html" class="action-btn view" title="View"><i class="bi bi-eye"></i></a>
+                                    <button class="action-btn print" title="Print"><i class="bi bi-printer"></i></button>
+                                    <button class="action-btn delete" title="Delete"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination-container">
+                <div class="pagination-info">
+                    Showing 1-8 of 1,847 orders
+                </div>
+                <div class="pagination">
+                    <button class="page-btn" disabled><i class="bi bi-chevron-left"></i></button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn">...</button>
+                    <button class="page-btn">231</button>
+                    <button class="page-btn"><i class="bi bi-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Mobile Sidebar Toggle -->
+    <button class="sidebar-toggle" id="sidebarToggle">
+        <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Order Quick View Offcanvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="orderQuickView" aria-labelledby="orderQuickViewLabel" style="width: 420px;">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="orderQuickViewLabel">
+                <span id="qvOrderId">#ORD-2024-1847</span>
+                <span class="order-badge" id="qvStatusBadge">Delivered</span>
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <!-- Customer Section -->
+            <div class="qv-section">
+                <div class="qv-section-title">Customer</div>
+                <div class="qv-customer">
+                    <div class="qv-customer-avatar" id="qvCustomerAvatar">JD</div>
+                    <div class="qv-customer-info">
+                        <div class="name" id="qvCustomerName">John Doe</div>
+                        <div class="email" id="qvCustomerEmail">john.doe@example.com</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Details Section -->
+            <div class="qv-section">
+                <div class="qv-section-title">Order Details</div>
+                <div class="qv-row">
+                    <span class="qv-label">Order Date</span>
+                    <span class="qv-value" id="qvOrderDate">Dec 5, 2024</span>
+                </div>
+                <div class="qv-row">
+                    <span class="qv-label">Payment</span>
+                    <span class="qv-value highlight" id="qvPayment">Paid</span>
+                </div>
+                <div class="qv-row">
+                    <span class="qv-label">Total Amount</span>
+                    <span class="qv-value" style="color: #43e97b; font-weight: 600;" id="qvAmount">$1,299.00</span>
+                </div>
+            </div>
+
+            <!-- Product Section -->
+            <div class="qv-section">
+                <div class="qv-section-title">Items</div>
+                <div class="qv-product">
+                    <div class="qv-product-img" id="qvProductImg">📱</div>
+                    <div class="qv-product-info">
+                        <div class="qv-product-name" id="qvProductName">iPhone 15 Pro</div>
+                        <div class="qv-product-qty" id="qvProductQty">Qty: 1</div>
+                    </div>
+                    <div class="qv-product-price" id="qvProductPrice">$1,299.00</div>
+                </div>
+            </div>
+
+            <!-- Timeline Section -->
+            <div class="qv-section">
+                <div class="qv-section-title">Order Timeline</div>
+                <div class="qv-timeline" id="qvTimeline">
+                    <div class="qv-timeline-item completed">
+                        <div class="qv-timeline-title">Order Placed</div>
+                        <div class="qv-timeline-date">Dec 5, 2024 - 10:30 AM</div>
+                    </div>
+                    <div class="qv-timeline-item completed">
+                        <div class="qv-timeline-title">Order Confirmed</div>
+                        <div class="qv-timeline-date">Dec 5, 2024 - 10:35 AM</div>
+                    </div>
+                    <div class="qv-timeline-item completed">
+                        <div class="qv-timeline-title">Shipped</div>
+                        <div class="qv-timeline-date">Dec 5, 2024 - 02:15 PM</div>
+                    </div>
+                    <div class="qv-timeline-item current">
+                        <div class="qv-timeline-title">Delivered</div>
+                        <div class="qv-timeline-date">Dec 5, 2024 - 05:45 PM</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="qv-actions">
+                <a href="order-details.html" class="qv-btn qv-btn-primary">
+                    <i class="bi bi-eye"></i>
+                    View Details
+                </a>
+                <button class="qv-btn qv-btn-outline">
+                    <i class="bi bi-printer"></i>
+                    Print
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Sidebar Toggle
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+        });
+
+        sidebarOverlay.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+        });
+
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        // Order Quick View - Dynamic content
+        const orderQuickView = document.getElementById('orderQuickView');
+        orderQuickView.addEventListener('show.bs.offcanvas', function(event) {
+            const trigger = event.relatedTarget;
+            if (!trigger) return;
+
+            // Get data from clicked order
+            const orderId = trigger.dataset.orderId;
+            const customer = trigger.dataset.customer;
+            const customerEmail = trigger.dataset.customerEmail;
+            const product = trigger.dataset.product;
+            const productEmoji = trigger.dataset.productEmoji;
+            const qty = trigger.dataset.qty;
+            const amount = trigger.dataset.amount;
+            const payment = trigger.dataset.payment;
+            const status = trigger.dataset.status;
+            const date = trigger.dataset.date;
+
+            // Generate customer initials
+            const initials = customer.split(' ').map(n => n[0]).join('');
+
+            // Update offcanvas content
+            document.getElementById('qvOrderId').textContent = orderId;
+            document.getElementById('qvCustomerAvatar').textContent = initials;
+            document.getElementById('qvCustomerName').textContent = customer;
+            document.getElementById('qvCustomerEmail').textContent = customerEmail;
+            document.getElementById('qvOrderDate').textContent = date;
+            document.getElementById('qvPayment').textContent = payment;
+            document.getElementById('qvAmount').textContent = amount;
+            document.getElementById('qvProductImg').textContent = productEmoji;
+            document.getElementById('qvProductName').textContent = product;
+            document.getElementById('qvProductQty').textContent = `Qty: ${qty}`;
+            document.getElementById('qvProductPrice').textContent = amount;
+
+            // Update status badge
+            const statusBadge = document.getElementById('qvStatusBadge');
+            statusBadge.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+            
+            // Status badge colors
+            const statusColors = {
+                'delivered': 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                'shipped': 'linear-gradient(135deg, #0ce0ff 0%, #00b4d8 100%)',
+                'processing': 'linear-gradient(135deg, #015fc9 0%, #0077e6 100%)',
+                'pending': 'linear-gradient(135deg, #f5af19 0%, #f12711 100%)',
+                'cancelled': 'linear-gradient(135deg, #f5576c 0%, #f093fb 100%)'
+            };
+            statusBadge.style.background = statusColors[status] || statusColors['processing'];
+
+            // Update timeline based on status
+            updateTimeline(status, date);
+        });
+
+        function updateTimeline(status, date) {
+            const timeline = document.getElementById('qvTimeline');
+
+            let timelineHtml = '';
+            const timelineSteps = [
+                { name: 'Order Placed', offset: '10:30 AM' },
+                { name: 'Order Confirmed', offset: '10:35 AM' },
+                { name: 'Shipped', offset: '02:15 PM' },
+                { name: 'Delivered', offset: '05:45 PM' }
+            ];
+
+            if (status === 'cancelled') {
+                timelineHtml = `
+                    <div class="qv-timeline-item completed">
+                        <div class="qv-timeline-title">Order Placed</div>
+                        <div class="qv-timeline-date">${date} - 10:30 AM</div>
+                    </div>
+                    <div class="qv-timeline-item cancelled">
+                        <div class="qv-timeline-title" style="color: #f5576c;">Order Cancelled</div>
+                        <div class="qv-timeline-date">${date} - 11:00 AM</div>
+                    </div>
+                `;
+            } else {
+                // Determine how many steps are completed based on status
+                let completedSteps = 0;
+                if (status === 'pending') completedSteps = 1;
+                else if (status === 'processing') completedSteps = 2;
+                else if (status === 'shipped') completedSteps = 3;
+                else if (status === 'delivered') completedSteps = 4;
+                
+                timelineSteps.forEach((step, index) => {
+                    let className = '';
+                    let dateText = '';
+                    
+                    if (index < completedSteps - 1) {
+                        // Completed steps
+                        className = 'completed';
+                        dateText = `${date} - ${step.offset}`;
+                    } else if (index === completedSteps - 1) {
+                        // Current step
+                        className = 'current';
+                        dateText = `${date} - ${step.offset}`;
+                    } else {
+                        // Pending steps
+                        className = 'pending';
+                        dateText = 'Pending';
+                    }
+                    
+                    timelineHtml += `
+                        <div class="qv-timeline-item ${className}">
+                            <div class="qv-timeline-title">${step.name}</div>
+                            <div class="qv-timeline-date">${dateText}</div>
+                        </div>
+                    `;
+                });
+            }
+
+            timeline.innerHTML = timelineHtml;
+        }
+    </script>
+</body>
+</html>

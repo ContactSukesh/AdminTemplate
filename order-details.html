@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details - Admin Dashboard</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23015fc9'/%3E%3Cstop offset='100%25' style='stop-color:%230ce0ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='url(%23g)'/%3E%3Cpath d='M50 25L75 45L75 70L50 85L25 70L25 45Z' fill='white' opacity='0.9'/%3E%3C/svg%3E">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #015fc9 0%, #0ce0ff 100%);
+            --accent-gradient: linear-gradient(135deg, #C115EC 0%, #f5576c 100%);
+            --cyan-gradient: linear-gradient(135deg, #015fc9 0%, #0ce0ff 100%);
+            --green-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --orange-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-bg-hover: rgba(255, 255, 255, 0.12);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-border-hover: rgba(255, 255, 255, 0.25);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --sidebar-width: 280px;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.65);
+            --text-muted: rgba(255, 255, 255, 0.45);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #00022A 0%, #000D33 50%, #00022B 100%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animated {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .bg-animated .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.35;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .bg-animated .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, #015fc9, #0077e6);
+            top: -200px;
+            left: -150px;
+        }
+
+        .bg-animated .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #C115EC, #8b0ab8);
+            top: 40%;
+            right: -100px;
+            animation-delay: -5s;
+        }
+
+        .bg-animated .orb-3 {
+            width: 450px;
+            height: 450px;
+            background: linear-gradient(135deg, #0ce0ff, #00b4d8);
+            bottom: -150px;
+            left: 25%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(30px, -30px) rotate(5deg); }
+            50% { transform: translate(-20px, 20px) rotate(-5deg); }
+            75% { transform: translate(20px, 10px) rotate(3deg); }
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-right: 1px solid var(--glass-border);
+            padding: 28px 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.4s ease;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 0 12px 28px;
+            border-bottom: 1px solid var(--glass-border);
+            margin-bottom: 28px;
+        }
+
+        .sidebar-logo .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-gradient);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 8px 24px rgba(1, 95, 201, 0.5);
+        }
+
+        .sidebar-logo .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.8) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+        }
+
+        .nav-item { margin-bottom: 6px; }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-gradient);
+            border-radius: 0 4px 4px 0;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: var(--glass-bg-hover);
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .nav-link.active::before { transform: scaleY(1); }
+
+        .nav-link i {
+            font-size: 20px;
+            width: 26px;
+            text-align: center;
+        }
+
+        .nav-link span {
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--accent-gradient);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            padding-top: 20px;
+            border-top: 1px solid var(--glass-border);
+            margin-top: auto;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            padding: 28px;
+        }
+
+        /* Top Navbar */
+        .top-navbar {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 18px 28px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--text-primary);
+            transform: translateX(-4px);
+        }
+
+        .page-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.85) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nav-icon-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        .nav-icon-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-icon-btn .badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 22px;
+            height: 22px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(26, 26, 62, 0.8);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            padding: 8px 16px 8px 8px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .user-profile:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--glass-border);
+        }
+
+        .user-avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 16px rgba(1, 95, 201, 0.4);
+            position: relative;
+        }
+
+        .user-avatar::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            background: #43e97b;
+            border-radius: 50%;
+            border: 2px solid rgba(26, 26, 62, 0.8);
+        }
+
+        .user-info { display: none; }
+
+        @media (min-width: 768px) {
+            .user-info { display: block; }
+        }
+
+        .user-info .name {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .user-info .role {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .dropdown-menu {
+            background: rgba(20, 20, 50, 0.95);
+            backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 8px;
+            margin-top: 10px;
+            min-width: 200px;
+        }
+
+        .dropdown-item {
+            color: var(--text-secondary);
+            padding: 12px 16px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+        }
+
+        .dropdown-item i { font-size: 16px; }
+
+        .dropdown-divider {
+            border-color: var(--glass-border);
+            margin: 8px 0;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-title i {
+            color: #0ce0ff;
+        }
+
+        /* Order Header */
+        .order-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--glass-border);
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .order-id-large {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0ce0ff;
+            margin-bottom: 8px;
+        }
+
+        .order-date {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-action {
+            padding: 12px 24px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            box-shadow: 0 4px 16px rgba(1, 95, 201, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(1, 95, 201, 0.5);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--text-primary);
+        }
+
+        /* Status Timeline */
+        .status-timeline {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 40px 0;
+        }
+
+        /* Gray background line - from first icon center to last icon center */
+        .status-timeline::before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: calc(10% + 0px); /* First step center (each step is 20% width, center at 10%) */
+            right: calc(10% + 0px); /* Last step center */
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        /* Green progress overlay line */
+        .status-timeline::after {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: calc(10%); /* Start at first icon center */
+            height: 4px;
+            background: #43e97b;
+            border-radius: 2px;
+            /* 5 steps: centers at 10%, 30%, 50%, 70%, 90% */
+            /* Currently at step 4 (Shipped/current), so green goes from 10% to 70% = 60% of container */
+            width: 60%;
+        }
+
+        .timeline-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-step.completed .step-icon {
+            background: var(--green-gradient);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 4px 16px rgba(67, 233, 123, 0.4);
+        }
+
+        .timeline-step.current .step-icon {
+            background: var(--primary-gradient);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 4px 16px rgba(1, 95, 201, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .step-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .timeline-step.completed .step-label,
+        .timeline-step.current .step-label {
+            color: var(--text-primary);
+        }
+
+        .step-date {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Order Items */
+        .order-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .order-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .order-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            flex-shrink: 0;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .item-variant {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .item-qty {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .item-price {
+            text-align: right;
+        }
+
+        .item-unit-price {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .item-total-price {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+
+        .summary-row.total {
+            padding-top: 20px;
+            margin-top: 8px;
+            border-top: 2px solid var(--glass-border);
+            border-bottom: none;
+        }
+
+        .summary-label {
+            color: var(--text-secondary);
+        }
+
+        .summary-value {
+            font-weight: 600;
+        }
+
+        .summary-row.total .summary-label,
+        .summary-row.total .summary-value {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .summary-row.total .summary-value {
+            color: #0ce0ff;
+        }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .info-section {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .info-section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-section-title i {
+            color: #0ce0ff;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .info-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .info-content {
+            flex: 1;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-badge.shipped {
+            background: rgba(193, 21, 236, 0.15);
+            color: #C115EC;
+        }
+        .status-badge.shipped::before { background: #C115EC; }
+
+        .status-badge.paid {
+            background: rgba(67, 233, 123, 0.15);
+            color: #43e97b;
+        }
+        .status-badge.paid::before { background: #43e97b; }
+
+        /* Activity Log */
+        .activity-log {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+        }
+
+        .activity-icon.success {
+            background: rgba(67, 233, 123, 0.15);
+            color: #43e97b;
+        }
+
+        .activity-icon.info {
+            background: rgba(1, 95, 201, 0.15);
+            color: #0ce0ff;
+        }
+
+        .activity-icon.warning {
+            background: rgba(250, 204, 21, 0.15);
+            color: #facc15;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .activity-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        /* Mobile Sidebar Toggle */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: 0 8px 32px rgba(1, 95, 201, 0.5);
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+        }
+
+        /* Responsive */
+        @media (max-width: 991.98px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+            .sidebar-toggle { display: flex; align-items: center; justify-content: center; }
+            .sidebar-overlay.active { display: block; }
+            .info-grid { grid-template-columns: 1fr; }
+            .status-timeline { flex-wrap: wrap; gap: 20px; }
+            .status-timeline::before { display: none; }
+            .timeline-step::before,
+            .timeline-step::after { display: none; }
+        }
+
+        @media (max-width: 767.98px) {
+            .top-navbar { padding: 14px 18px; }
+            .glass-card { padding: 20px; }
+            .main-content { padding: 16px; }
+            .order-header { flex-direction: column; }
+            .order-actions { width: 100%; }
+            .order-actions .btn-action { flex: 1; justify-content: center; }
+            .order-item { flex-direction: column; text-align: center; }
+            .item-price { text-align: center; margin-top: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animated">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">
+                <i class="bi bi-hexagon-fill"></i>
+            </div>
+            <span class="logo-text">AdminPro</span>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="index.html" class="nav-link">
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="customers.html" class="nav-link">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Customers</span>
+                    <span class="nav-badge">128</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="analytics.html" class="nav-link">
+                    <i class="bi bi-bar-chart-fill"></i>
+                    <span>Analytics</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="orders.html" class="nav-link active">
+                    <i class="bi bi-cart-fill"></i>
+                    <span>Orders</span>
+                    <span class="nav-badge">24</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="bi bi-chat-dots-fill"></i>
+                    <span>Messages</span>
+                    <span class="nav-badge">7</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="bi bi-folder-fill"></i>
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="bi bi-calendar-event-fill"></i>
+                    <span>Calendar</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="bi bi-gear-fill"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="login.html" class="nav-link logout">
+                <i class="bi bi-box-arrow-left"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navbar -->
+        <nav class="top-navbar">
+            <div class="page-header">
+                <a href="orders.html" class="back-btn">
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+                <div>
+                    <h1 class="page-title">Order Details</h1>
+                    <p class="page-subtitle">View and manage order information</p>
+                </div>
+            </div>
+            <div class="navbar-actions">
+                <div class="nav-icon-btn">
+                    <i class="bi bi-bell-fill"></i>
+                    <span class="badge">5</span>
+                </div>
+                <div class="nav-icon-btn d-none d-md-flex">
+                    <i class="bi bi-envelope-fill"></i>
+                </div>
+                <div class="dropdown">
+                    <div class="user-profile" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="user-avatar">JD</div>
+                        <div class="user-info">
+                            <div class="name">John Doe</div>
+                            <div class="role">Administrator</div>
+                        </div>
+                        <i class="bi bi-chevron-down ms-1 d-none d-md-block" style="font-size: 12px; color: var(--text-muted);"></i>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i>My Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i>Settings</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-question-circle"></i>Help Center</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="login.html"><i class="bi bi-box-arrow-left"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Order Overview -->
+        <div class="glass-card">
+            <div class="order-header">
+                <div>
+                    <div class="order-id-large">#ORD-2024-1846</div>
+                    <div class="order-date">
+                        <i class="bi bi-calendar3"></i> Placed on December 5, 2024 at 2:34 PM
+                    </div>
+                </div>
+                <div class="order-actions">
+                    <button class="btn-action btn-secondary">
+                        <i class="bi bi-printer"></i>
+                        Print Invoice
+                    </button>
+                    <button class="btn-action btn-primary">
+                        <i class="bi bi-pencil"></i>
+                        Update Status
+                    </button>
+                </div>
+            </div>
+
+            <!-- Status Timeline -->
+            <div class="status-timeline">
+                <div class="timeline-step completed">
+                    <div class="step-icon">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+                    <div class="step-label">Order Placed</div>
+                    <div class="step-date">Dec 5, 2:34 PM</div>
+                </div>
+                <div class="timeline-step completed">
+                    <div class="step-icon">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+                    <div class="step-label">Payment Confirmed</div>
+                    <div class="step-date">Dec 5, 2:35 PM</div>
+                </div>
+                <div class="timeline-step completed">
+                    <div class="step-icon">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+                    <div class="step-label">Processing</div>
+                    <div class="step-date">Dec 5, 3:00 PM</div>
+                </div>
+                <div class="timeline-step current">
+                    <div class="step-icon">
+                        <i class="bi bi-truck"></i>
+                    </div>
+                    <div class="step-label">Shipped</div>
+                    <div class="step-date">Dec 5, 5:45 PM</div>
+                </div>
+                <div class="timeline-step">
+                    <div class="step-icon">
+                        <i class="bi bi-house-door"></i>
+                    </div>
+                    <div class="step-label">Delivered</div>
+                    <div class="step-date">Expected Dec 8</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Order Items -->
+            <div class="col-lg-8">
+                <div class="glass-card">
+                    <h3 class="card-title">
+                        <i class="bi bi-box-seam"></i>
+                        Order Items
+                    </h3>
+
+                    <div class="order-item">
+                        <div class="item-image">💻</div>
+                        <div class="item-details">
+                            <div class="item-name">MacBook Pro 14"</div>
+                            <div class="item-variant">Space Gray • M3 Pro • 18GB RAM • 512GB SSD</div>
+                            <div class="item-qty">Quantity: 1</div>
+                        </div>
+                        <div class="item-price">
+                            <div class="item-unit-price">$2,499.00 each</div>
+                            <div class="item-total-price">$2,499.00</div>
+                        </div>
+                    </div>
+
+                    <div class="order-summary mt-4">
+                        <div class="summary-row">
+                            <span class="summary-label">Subtotal</span>
+                            <span class="summary-value">$2,499.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Shipping</span>
+                            <span class="summary-value">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Tax (8%)</span>
+                            <span class="summary-value">$199.92</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Discount</span>
+                            <span class="summary-value" style="color: #43e97b;">-$200.00</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span class="summary-label">Total</span>
+                            <span class="summary-value">$2,498.92</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Log -->
+                <div class="glass-card">
+                    <h3 class="card-title">
+                        <i class="bi bi-clock-history"></i>
+                        Activity Log
+                    </h3>
+                    <div class="activity-log">
+                        <div class="activity-item">
+                            <div class="activity-icon info">
+                                <i class="bi bi-truck"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Package Shipped</div>
+                                <div class="activity-desc">Order has been shipped via FedEx Express. Tracking: 1234567890</div>
+                            </div>
+                            <div class="activity-time">5:45 PM</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon success">
+                                <i class="bi bi-box-seam"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Order Packed</div>
+                                <div class="activity-desc">Order has been packed and is ready for shipping</div>
+                            </div>
+                            <div class="activity-time">4:20 PM</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon info">
+                                <i class="bi bi-gear"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Processing Started</div>
+                                <div class="activity-desc">Order processing has begun</div>
+                            </div>
+                            <div class="activity-time">3:00 PM</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon success">
+                                <i class="bi bi-credit-card"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Payment Received</div>
+                                <div class="activity-desc">Payment of $2,498.92 received via Credit Card</div>
+                            </div>
+                            <div class="activity-time">2:35 PM</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon warning">
+                                <i class="bi bi-cart-plus"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Order Created</div>
+                                <div class="activity-desc">New order placed by Sarah Miller</div>
+                            </div>
+                            <div class="activity-time">2:34 PM</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-lg-4">
+                <!-- Customer Info -->
+                <div class="glass-card">
+                    <h3 class="card-title">
+                        <i class="bi bi-person"></i>
+                        Customer
+                    </h3>
+                    <div class="info-row">
+                        <div class="info-icon">
+                            <i class="bi bi-person-fill"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Name</div>
+                            <div class="info-value">Sarah Miller</div>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-icon">
+                            <i class="bi bi-envelope-fill"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Email</div>
+                            <div class="info-value">sarah.m@email.com</div>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-icon">
+                            <i class="bi bi-telephone-fill"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Phone</div>
+                            <div class="info-value">+1 (555) 234-5678</div>
+                        </div>
+                    </div>
+                    <a href="customer-details.html" class="btn-action btn-secondary w-100 justify-content-center mt-3">
+                        <i class="bi bi-eye"></i>
+                        View Customer Profile
+                    </a>
+                </div>
+
+                <!-- Shipping Address -->
+                <div class="glass-card">
+                    <h3 class="card-title">
+                        <i class="bi bi-geo-alt"></i>
+                        Shipping Address
+                    </h3>
+                    <div class="info-section" style="background: transparent; border: none; padding: 0;">
+                        <p style="line-height: 1.8;">
+                            <strong>Sarah Miller</strong><br>
+                            456 Oak Avenue, Suite 12<br>
+                            Los Angeles, CA 90001<br>
+                            United States
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Payment Info -->
+                <div class="glass-card">
+                    <h3 class="card-title">
+                        <i class="bi bi-credit-card"></i>
+                        Payment
+                    </h3>
+                    <div class="info-row">
+                        <div class="info-icon">
+                            <i class="bi bi-credit-card-2-front"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Method</div>
+                            <div class="info-value">Visa •••• 4242</div>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-icon">
+                            <i class="bi bi-receipt"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Transaction ID</div>
+                            <div class="info-value">TXN-2024-789456</div>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-icon">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Status</div>
+                            <div class="info-value">
+                                <span class="status-badge paid">Paid</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shipping Info -->
+                <div class="glass-card">
+                    <h3 class="card-title">
+                        <i class="bi bi-truck"></i>
+                        Shipping
+                    </h3>
+                    <div class="info-row">
+                        <div class="info-icon">
+                            <i class="bi bi-box"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Carrier</div>
+                            <div class="info-value">FedEx Express</div>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-icon">
+                            <i class="bi bi-upc-scan"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Tracking Number</div>
+                            <div class="info-value" style="color: #0ce0ff;">1234567890</div>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-icon">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Est. Delivery</div>
+                            <div class="info-value">December 8, 2024</div>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-icon">
+                            <i class="bi bi-pin-map"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Status</div>
+                            <div class="info-value">
+                                <span class="status-badge shipped">In Transit</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Mobile Sidebar Toggle -->
+    <button class="sidebar-toggle" id="sidebarToggle">
+        <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Sidebar Toggle
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+        });
+
+        sidebarOverlay.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+        });
+    </script>
+</body>
+</html>

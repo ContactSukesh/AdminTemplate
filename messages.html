@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - Admin Dashboard</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23015fc9'/%3E%3Cstop offset='100%25' style='stop-color:%230ce0ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='url(%23g)'/%3E%3Cpath d='M50 25L75 45L75 70L50 85L25 70L25 45Z' fill='white' opacity='0.9'/%3E%3C/svg%3E">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #015fc9 0%, #0ce0ff 100%);
+            --accent-gradient: linear-gradient(135deg, #C115EC 0%, #f5576c 100%);
+            --cyan-gradient: linear-gradient(135deg, #015fc9 0%, #0ce0ff 100%);
+            --green-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --orange-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-bg-hover: rgba(255, 255, 255, 0.12);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-border-hover: rgba(255, 255, 255, 0.25);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --glass-shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.4);
+            --sidebar-width: 280px;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.65);
+            --text-muted: rgba(255, 255, 255, 0.45);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #00022A 0%, #000D33 50%, #00022B 100%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        .bg-animated {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .bg-animated .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.35;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .bg-animated .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, #015fc9, #0077e6);
+            top: -200px;
+            left: -150px;
+        }
+
+        .bg-animated .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #C115EC, #8b0ab8);
+            top: 40%;
+            right: -100px;
+            animation-delay: -5s;
+        }
+
+        .bg-animated .orb-3 {
+            width: 450px;
+            height: 450px;
+            background: linear-gradient(135deg, #0ce0ff, #00b4d8);
+            bottom: -150px;
+            left: 25%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(30px, -30px) rotate(5deg); }
+            50% { transform: translate(-20px, 20px) rotate(-5deg); }
+            75% { transform: translate(20px, 10px) rotate(3deg); }
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-right: 1px solid var(--glass-border);
+            padding: 28px 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 0 12px 28px;
+            border-bottom: 1px solid var(--glass-border);
+            margin-bottom: 28px;
+        }
+
+        .sidebar-logo .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-gradient);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 8px 24px rgba(1, 95, 201, 0.5);
+        }
+
+        .sidebar-logo .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.8) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+        }
+
+        .nav-item { margin-bottom: 6px; }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-gradient);
+            border-radius: 0 4px 4px 0;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: var(--glass-bg-hover);
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .nav-link.active::before { transform: scaleY(1); }
+        .nav-link i { font-size: 20px; width: 26px; text-align: center; }
+        .nav-link span { font-weight: 500; font-size: 15px; }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--accent-gradient);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            padding-top: 20px;
+            border-top: 1px solid var(--glass-border);
+            margin-top: auto;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            padding: 28px;
+        }
+
+        /* Top Navbar */
+        .top-navbar {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 18px 28px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .page-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.85) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 12px 18px 12px 48px;
+            color: var(--text-primary);
+            width: 280px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input::placeholder { color: var(--text-muted); }
+
+        .search-box input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--glass-border-hover);
+            box-shadow: 0 0 30px rgba(1, 95, 201, 0.25);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .nav-icon-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        .nav-icon-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .nav-icon-btn .badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 22px;
+            height: 22px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            padding: 8px 16px 8px 8px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .user-profile:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--glass-border);
+        }
+
+        .user-avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 16px rgba(1, 95, 201, 0.4);
+            position: relative;
+        }
+
+        .user-avatar::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            background: #43e97b;
+            border-radius: 50%;
+            border: 2px solid #000d33;
+        }
+
+        .user-info .name { font-weight: 600; font-size: 14px; color: var(--text-primary); }
+        .user-info .role { font-size: 12px; color: var(--text-secondary); }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        }
+
+        /* Messages Layout */
+        .messages-wrapper {
+            display: flex;
+            gap: 24px;
+            height: calc(100vh - 180px);
+        }
+
+        /* Conversations Panel */
+        .conversations-panel {
+            width: 380px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .conversations-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .conversations-header h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .conversations-search {
+            position: relative;
+        }
+
+        .conversations-search input {
+            width: 100%;
+            padding: 12px 18px 12px 48px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+        }
+
+        .conversations-search input:focus {
+            outline: none;
+            border-color: var(--glass-border-hover);
+        }
+
+        .conversations-search input::placeholder { color: var(--text-muted); }
+
+        .conversations-search i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .conversations-tabs {
+            display: flex;
+            padding: 16px 24px;
+            gap: 10px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .tab-btn {
+            padding: 10px 18px;
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover {
+            background: var(--glass-bg);
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            background: var(--primary-gradient);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 4px 16px rgba(1, 95, 201, 0.4);
+        }
+
+        .tab-btn .count {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 11px;
+        }
+
+        .conversations-body {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .conversation-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 18px 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .conversation-item:hover { background: rgba(255, 255, 255, 0.04); }
+
+        .conversation-item.active {
+            background: rgba(1, 95, 201, 0.15);
+        }
+
+        .conversation-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--primary-gradient);
+        }
+
+        .conversation-avatar {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .avatar-img {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 18px;
+            color: white;
+        }
+
+        .status-dot {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 3px solid #000d33;
+        }
+
+        .status-dot.online { background: #43e97b; }
+        .status-dot.offline { background: var(--text-muted); }
+        .status-dot.away { background: #ffc107; }
+
+        .conversation-content { flex: 1; min-width: 0; }
+
+        .conversation-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .conversation-name { font-weight: 600; font-size: 15px; }
+        .conversation-time { font-size: 12px; color: var(--text-muted); }
+
+        .conversation-preview {
+            font-size: 13px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .conversation-item.unread .conversation-preview {
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 500;
+        }
+
+        .conversation-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .unread-badge {
+            background: var(--accent-gradient);
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 10px;
+        }
+
+        .pinned-icon { color: #0ce0ff; font-size: 13px; }
+
+        /* Chat Panel */
+        .chat-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            padding: 20px 28px;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-user-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .chat-user-info .avatar-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+        }
+
+        .chat-user-details h5 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .chat-user-details .status {
+            font-size: 13px;
+            color: #43e97b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .chat-user-details .status i { font-size: 8px; }
+
+        .chat-actions { display: flex; gap: 10px; }
+
+        .chat-action-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        .chat-action-btn:hover {
+            background: var(--glass-bg-hover);
+            color: #0ce0ff;
+            transform: translateY(-2px);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .message-date { text-align: center; margin: 12px 0; }
+
+        .message-date span {
+            background: var(--glass-bg);
+            padding: 8px 20px;
+            border-radius: 12px;
+            font-size: 12px;
+            color: var(--text-muted);
+            border: 1px solid var(--glass-border);
+        }
+
+        .message {
+            display: flex;
+            gap: 14px;
+            max-width: 70%;
+        }
+
+        .message.sent {
+            margin-left: auto;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar .avatar-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        .message-content { display: flex; flex-direction: column; }
+
+        .message-bubble {
+            padding: 14px 18px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .message.received .message-bubble {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-bottom-left-radius: 6px;
+        }
+
+        .message.sent .message-bubble {
+            background: var(--primary-gradient);
+            color: white;
+            border-bottom-right-radius: 6px;
+            box-shadow: 0 4px 16px rgba(1, 95, 201, 0.3);
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 6px;
+            padding: 0 4px;
+        }
+
+        .message.sent .message-time { text-align: right; }
+
+        .message-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .message-status i { font-size: 14px; color: #43e97b; }
+
+        /* Chat Input */
+        .chat-input-area {
+            padding: 20px 28px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .chat-input-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 14px;
+        }
+
+        .input-actions { display: flex; gap: 6px; }
+
+        .input-action-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        .input-action-btn:hover {
+            background: var(--glass-bg);
+            color: var(--text-primary);
+        }
+
+        .message-input-wrapper { flex: 1; }
+
+        .message-input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            resize: none;
+            min-height: 50px;
+            max-height: 120px;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: var(--glass-border-hover);
+            box-shadow: 0 0 20px rgba(1, 95, 201, 0.2);
+        }
+
+        .message-input::placeholder { color: var(--text-muted); }
+
+        .send-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(1, 95, 201, 0.5);
+            font-size: 20px;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 30px rgba(1, 95, 201, 0.6);
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            width: fit-content;
+        }
+
+        .typing-indicator > span { font-size: 13px; color: var(--text-muted); }
+
+        .typing-dots { display: flex; gap: 4px; }
+
+        .typing-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-6px); }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 3px; }
+
+        @media (max-width: 1200px) {
+            .conversations-panel { width: 320px; }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar { transform: translateX(-100%); }
+            .main-content { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animated">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon"><i class="bi bi-hexagon-fill"></i></div>
+            <span class="logo-text">Zenith</span>
+        </div>
+        
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="index.html" class="nav-link"><i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></a></li>
+            <li class="nav-item"><a href="orders.html" class="nav-link"><i class="bi bi-cart3"></i><span>Orders</span></a></li>
+            <li class="nav-item"><a href="messages.html" class="nav-link active"><i class="bi bi-chat-dots-fill"></i><span>Messages</span><span class="nav-badge">3</span></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="bi bi-calendar3"></i><span>Calendar</span></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="bi bi-kanban"></i><span>Tasks</span></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="bi bi-people"></i><span>Team</span></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="bi bi-bar-chart-line"></i><span>Analytics</span></a></li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="#" class="nav-link"><i class="bi bi-gear"></i><span>Settings</span></a>
+            <a href="login.html" class="nav-link"><i class="bi bi-box-arrow-left"></i><span>Logout</span></a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <nav class="top-navbar">
+            <div class="page-header">
+                <h1 class="page-title">Messages</h1>
+                <p class="page-subtitle">Stay connected with your team</p>
+            </div>
+            <div class="navbar-actions">
+                <div class="search-box">
+                    <i class="bi bi-search"></i>
+                    <input type="text" placeholder="Search messages...">
+                </div>
+                <button class="nav-icon-btn">
+                    <i class="bi bi-bell"></i>
+                    <span class="badge">5</span>
+                </button>
+                <div class="user-profile">
+                    <div class="user-avatar">JD</div>
+                    <div class="user-info">
+                        <div class="name">John Doe</div>
+                        <div class="role">Admin</div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="messages-wrapper">
+            <!-- Conversations Panel -->
+            <div class="conversations-panel glass-card">
+                <div class="conversations-header">
+                    <h4>Conversations</h4>
+                    <div class="conversations-search">
+                        <i class="bi bi-search"></i>
+                        <input type="text" placeholder="Search conversations...">
+                    </div>
+                </div>
+                
+                <div class="conversations-tabs">
+                    <button class="tab-btn active">All <span class="count">12</span></button>
+                    <button class="tab-btn">Unread <span class="count">3</span></button>
+                    <button class="tab-btn">Archived</button>
+                </div>
+
+                <div class="conversations-body">
+                    <div class="conversation-item active" onclick="selectConversation(this, 'sarah')">
+                        <div class="conversation-avatar">
+                            <div class="avatar-img" style="background: var(--primary-gradient);">SM</div>
+                            <span class="status-dot online"></span>
+                        </div>
+                        <div class="conversation-content">
+                            <div class="conversation-header">
+                                <span class="conversation-name">Sarah Mitchell</span>
+                                <span class="conversation-time">2 min ago</span>
+                            </div>
+                            <p class="conversation-preview">That sounds great! Let me check the availability...</p>
+                            <div class="conversation-meta"><i class="bi bi-pin-angle-fill pinned-icon"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="conversation-item unread" onclick="selectConversation(this, 'alex')">
+                        <div class="conversation-avatar">
+                            <div class="avatar-img" style="background: var(--green-gradient);">AJ</div>
+                            <span class="status-dot online"></span>
+                        </div>
+                        <div class="conversation-content">
+                            <div class="conversation-header">
+                                <span class="conversation-name">Alex Johnson</span>
+                                <span class="conversation-time">15 min ago</span>
+                            </div>
+                            <p class="conversation-preview">Hey! Did you review the latest design mockups?</p>
+                            <div class="conversation-meta"><span class="unread-badge">2</span></div>
+                        </div>
+                    </div>
+
+                    <div class="conversation-item unread" onclick="selectConversation(this, 'emily')">
+                        <div class="conversation-avatar">
+                            <div class="avatar-img" style="background: var(--accent-gradient);">ER</div>
+                            <span class="status-dot away"></span>
+                        </div>
+                        <div class="conversation-content">
+                            <div class="conversation-header">
+                                <span class="conversation-name">Emily Roberts</span>
+                                <span class="conversation-time">1 hour ago</span>
+                            </div>
+                            <p class="conversation-preview">The meeting has been rescheduled to 3 PM</p>
+                            <div class="conversation-meta"><span class="unread-badge">1</span></div>
+                        </div>
+                    </div>
+
+                    <div class="conversation-item" onclick="selectConversation(this, 'michael')">
+                        <div class="conversation-avatar">
+                            <div class="avatar-img" style="background: var(--cyan-gradient);">MC</div>
+                            <span class="status-dot offline"></span>
+                        </div>
+                        <div class="conversation-content">
+                            <div class="conversation-header">
+                                <span class="conversation-name">Michael Chen</span>
+                                <span class="conversation-time">3 hours ago</span>
+                            </div>
+                            <p class="conversation-preview">Thanks for the update on the project timeline.</p>
+                        </div>
+                    </div>
+
+                    <div class="conversation-item" onclick="selectConversation(this, 'jessica')">
+                        <div class="conversation-avatar">
+                            <div class="avatar-img" style="background: var(--orange-gradient);">JT</div>
+                            <span class="status-dot online"></span>
+                        </div>
+                        <div class="conversation-content">
+                            <div class="conversation-header">
+                                <span class="conversation-name">Jessica Taylor</span>
+                                <span class="conversation-time">Yesterday</span>
+                            </div>
+                            <p class="conversation-preview">I've attached the revised proposal for your review</p>
+                        </div>
+                    </div>
+
+                    <div class="conversation-item" onclick="selectConversation(this, 'david')">
+                        <div class="conversation-avatar">
+                            <div class="avatar-img" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">DW</div>
+                            <span class="status-dot offline"></span>
+                        </div>
+                        <div class="conversation-content">
+                            <div class="conversation-header">
+                                <span class="conversation-name">David Wilson</span>
+                                <span class="conversation-time">Yesterday</span>
+                            </div>
+                            <p class="conversation-preview">Can we schedule a call for next week?</p>
+                        </div>
+                    </div>
+
+                    <div class="conversation-item" onclick="selectConversation(this, 'team')">
+                        <div class="conversation-avatar">
+                            <div class="avatar-img" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">TM</div>
+                            <span class="status-dot online"></span>
+                        </div>
+                        <div class="conversation-content">
+                            <div class="conversation-header">
+                                <span class="conversation-name">Design Team</span>
+                                <span class="conversation-time">2 days ago</span>
+                            </div>
+                            <p class="conversation-preview">Sarah: The new components are ready for review</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Panel -->
+            <div class="chat-panel glass-card">
+                <div class="chat-header">
+                    <div class="chat-user-info">
+                        <div class="avatar-img" style="background: var(--primary-gradient);">SM</div>
+                        <div class="chat-user-details">
+                            <h5>Sarah Mitchell</h5>
+                            <span class="status"><i class="bi bi-circle-fill"></i> Online</span>
+                        </div>
+                    </div>
+                    <div class="chat-actions">
+                        <button class="chat-action-btn" title="Voice Call"><i class="bi bi-telephone"></i></button>
+                        <button class="chat-action-btn" title="Video Call"><i class="bi bi-camera-video"></i></button>
+                        <button class="chat-action-btn" title="Search"><i class="bi bi-search"></i></button>
+                        <button class="chat-action-btn" title="More"><i class="bi bi-three-dots-vertical"></i></button>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message-date"><span>Today</span></div>
+
+                    <div class="message received">
+                        <div class="message-avatar">
+                            <div class="avatar-img" style="background: var(--primary-gradient);">SM</div>
+                        </div>
+                        <div class="message-content">
+                            <div class="message-bubble">Hi! I wanted to discuss the upcoming project deadline. Do you have a few minutes?</div>
+                            <div class="message-time">10:30 AM</div>
+                        </div>
+                    </div>
+
+                    <div class="message sent">
+                        <div class="message-content">
+                            <div class="message-bubble">Hey Sarah! Yes, I'm available. What would you like to discuss?</div>
+                            <div class="message-time"><span class="message-status">10:32 AM <i class="bi bi-check2-all"></i></span></div>
+                        </div>
+                    </div>
+
+                    <div class="message received">
+                        <div class="message-avatar">
+                            <div class="avatar-img" style="background: var(--primary-gradient);">SM</div>
+                        </div>
+                        <div class="message-content">
+                            <div class="message-bubble">I've been reviewing the timeline and I think we might need to adjust some deliverables. The client has requested additional features.</div>
+                            <div class="message-time">10:35 AM</div>
+                        </div>
+                    </div>
+
+                    <div class="message sent">
+                        <div class="message-content">
+                            <div class="message-bubble">I see. Can you share the list of new features they've requested? We should evaluate the scope impact first.</div>
+                            <div class="message-time"><span class="message-status">10:38 AM <i class="bi bi-check2-all"></i></span></div>
+                        </div>
+                    </div>
+
+                    <div class="message received">
+                        <div class="message-avatar">
+                            <div class="avatar-img" style="background: var(--primary-gradient);">SM</div>
+                        </div>
+                        <div class="message-content">
+                            <div class="message-bubble">Sure! Here's what they want:<br><br>1. Advanced analytics dashboard<br>2. Real-time notifications<br>3. Export functionality for reports<br>4. Multi-language support</div>
+                            <div class="message-time">10:42 AM</div>
+                        </div>
+                    </div>
+
+                    <div class="message sent">
+                        <div class="message-content">
+                            <div class="message-bubble">That's quite a bit! Let me check with the development team about the feasibility and get back to you with a revised timeline.</div>
+                            <div class="message-time"><span class="message-status">10:45 AM <i class="bi bi-check2-all"></i></span></div>
+                        </div>
+                    </div>
+
+                    <div class="message received">
+                        <div class="message-avatar">
+                            <div class="avatar-img" style="background: var(--primary-gradient);">SM</div>
+                        </div>
+                        <div class="message-content">
+                            <div class="message-bubble">That sounds great! Let me check the availability and I'll send you the meeting invite.</div>
+                            <div class="message-time">10:48 AM</div>
+                        </div>
+                    </div>
+
+                    <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                        <div class="typing-dots"><span></span><span></span><span></span></div>
+                        <span>Sarah is typing...</span>
+                    </div>
+                </div>
+
+                <div class="chat-input-area">
+                    <div class="chat-input-container">
+                        <div class="input-actions">
+                            <button class="input-action-btn" title="Attach"><i class="bi bi-paperclip"></i></button>
+                            <button class="input-action-btn" title="Image"><i class="bi bi-image"></i></button>
+                            <button class="input-action-btn" title="Emoji"><i class="bi bi-emoji-smile"></i></button>
+                        </div>
+                        <div class="message-input-wrapper">
+                            <textarea class="message-input" placeholder="Type a message..." rows="1" id="messageInput"></textarea>
+                        </div>
+                        <button class="send-btn" onclick="sendMessage()"><i class="bi bi-send-fill"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function selectConversation(element, id) {
+            document.querySelectorAll('.conversation-item').forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+            element.classList.remove('unread');
+            const badge = element.querySelector('.unread-badge');
+            if (badge) badge.remove();
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            if (message) {
+                const chatMessages = document.getElementById('chatMessages');
+                const time = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+                
+                chatMessages.insertAdjacentHTML('beforeend', `
+                    <div class="message sent">
+                        <div class="message-content">
+                            <div class="message-bubble">${message}</div>
+                            <div class="message-time"><span class="message-status">${time} <i class="bi bi-check2"></i></span></div>
+                        </div>
+                    </div>
+                `);
+                
+                input.value = '';
+                input.style.height = 'auto';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                const typingIndicator = document.getElementById('typingIndicator');
+                setTimeout(() => {
+                    typingIndicator.style.display = 'flex';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    
+                    setTimeout(() => {
+                        typingIndicator.style.display = 'none';
+                        chatMessages.insertAdjacentHTML('beforeend', `
+                            <div class="message received">
+                                <div class="message-avatar">
+                                    <div class="avatar-img" style="background: var(--primary-gradient);">SM</div>
+                                </div>
+                                <div class="message-content">
+                                    <div class="message-bubble">Thanks for the message! I'll get back to you shortly.</div>
+                                    <div class="message-time">${new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}</div>
+                                </div>
+                            </div>
+                        `);
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                        document.querySelectorAll('.message.sent .bi-check2').forEach(c => { c.classList.remove('bi-check2'); c.classList.add('bi-check2-all'); });
+                    }, 2000);
+                }, 1000);
+            }
+        }
+
+        document.getElementById('messageInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+        });
+
+        document.getElementById('messageInput').addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AdminPro</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23015fc9'/%3E%3Cstop offset='100%25' style='stop-color:%230ce0ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='url(%23g)'/%3E%3Cpath d='M50 25L75 45L75 70L50 85L25 70L25 45Z' fill='white' opacity='0.9'/%3E%3C/svg%3E">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Auth Styles -->
+    <link rel="stylesheet" href="assets/css/components/auth.css">
+</head>
+<body>
+    <div class="auth-wrapper min-vh-100 d-flex align-items-center justify-content-center py-4">
+        <!-- Animated Background -->
+        <div class="bg-animated">
+            <div class="orb orb-1" style="background: linear-gradient(135deg, #015fc9, #0077e6);"></div>
+            <div class="orb orb-2" style="background: linear-gradient(135deg, #0ce0ff, #00b4d8);"></div>
+            <div class="orb orb-3" style="background: linear-gradient(135deg, #C115EC, #8b0ab8);"></div>
+        </div>
+        
+        <!-- Particles -->
+        <div class="particles" id="particles"></div>
+
+        <!-- Auth Container -->
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+                    <div class="auth-card">
+                        <!-- Logo -->
+                        <div class="auth-logo text-center">
+                            <div class="logo-icon mx-auto">
+                                <i class="bi bi-shield-lock"></i>
+                            </div>
+                            <h1 class="mt-3">Welcome Back</h1>
+                            <p class="text-muted">Sign in to continue to AdminPro</p>
+                        </div>
+
+                        <!-- Login Form -->
+                        <form class="auth-form" data-auth-type="login">
+                            <div class="mb-3">
+                                <label class="form-label">Email Address</label>
+                                <div class="input-group">
+                                    <i class="bi bi-envelope input-icon"></i>
+                                    <input 
+                                        type="email" 
+                                        class="form-control" 
+                                        name="email" 
+                                        placeholder="Enter your email"
+                                        required
+                                        autocomplete="email"
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label d-flex justify-content-between align-items-center">
+                                    <span>Password</span>
+                                    <a href="auth-forgot-password.html" class="forgot-link">Forgot Password?</a>
+                                </label>
+                                <div class="input-group">
+                                    <i class="bi bi-lock input-icon"></i>
+                                    <input 
+                                        type="password" 
+                                        class="form-control" 
+                                        name="password" 
+                                        placeholder="Enter your password"
+                                        required
+                                        autocomplete="current-password"
+                                    >
+                                    <button type="button" class="password-toggle-btn">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <label class="remember-me d-flex align-items-center gap-2">
+                                    <input type="checkbox" name="remember" class="form-check-input m-0">
+                                    <span>Remember me</span>
+                                </label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 py-2">
+                                Sign In
+                            </button>
+                        </form>
+
+                        <!-- Divider -->
+                        <div class="divider my-4">
+                            <span>or continue with</span>
+                        </div>
+
+                        <!-- Social Login -->
+                        <div class="row g-2">
+                            <div class="col-3">
+                                <a href="#" class="btn btn-social google w-100">
+                                    <i class="bi bi-google"></i>
+                                </a>
+                            </div>
+                            <div class="col-3">
+                                <a href="#" class="btn btn-social facebook w-100">
+                                    <i class="bi bi-facebook"></i>
+                                </a>
+                            </div>
+                            <div class="col-3">
+                                <a href="#" class="btn btn-social twitter w-100">
+                                    <i class="bi bi-twitter-x"></i>
+                                </a>
+                            </div>
+                            <div class="col-3">
+                                <a href="#" class="btn btn-social github w-100">
+                                    <i class="bi bi-github"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="auth-footer text-center mt-4">
+                            <p class="mb-0">Don't have an account? <a href="auth-register.html">Sign Up</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Auth Module -->
+    <script type="module" src="assets/js/modules/auth.js"></script>
+    
+    <!-- Particles Script -->
+    <script>
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+    </script>
+</body>
+</html>

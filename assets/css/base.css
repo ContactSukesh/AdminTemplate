@@ -1,0 +1,154 @@
+/* ================================
+   Base Styles & Global Resets
+   ================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-base);
+    color: var(--text-primary);
+    background-color: var(--body-bg);
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background-color 0.2s ease;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-heading);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+h1 { font-size: var(--font-size-3xl); }
+h2 { font-size: var(--font-size-2xl); }
+h3 { font-size: var(--font-size-xl); }
+h4 { font-size: var(--font-size-lg); }
+h5 { font-size: var(--font-size-base); }
+h6 { font-size: var(--font-size-sm); }
+
+p {
+    margin-bottom: var(--spacing-md);
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+a:hover {
+    color: var(--primary-dark);
+}
+
+/* Lists */
+ul, ol {
+    list-style: none;
+}
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Buttons Reset */
+button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+/* Input Reset */
+input, textarea, select {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+/* Focus Styles */
+:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Selection */
+::selection {
+    background-color: rgba(var(--primary-rgb), 0.2);
+    color: var(--text-heading);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--body-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: var(--border-radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--border-dark);
+}
+
+/* Layout Container */
+.layout-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.layout-container {
+    flex: 1;
+    display: flex;
+    position: relative;
+}
+
+.layout-content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.content-wrapper {
+    flex: 1;
+    padding: var(--spacing-lg);
+    width: 100%;
+}
+
+/* Additional Utility Classes (complement Bootstrap) */
+.text-heading { color: var(--text-heading); }
+
+.fw-medium { font-weight: var(--font-weight-medium); }
+
+/* Gap utilities for older browsers */
+.gap-custom-1 { gap: var(--spacing-xs); }
+.gap-custom-2 { gap: var(--spacing-sm); }
+.gap-custom-3 { gap: var(--spacing-md); }
+.gap-custom-4 { gap: var(--spacing-lg); }
+.gap-custom-5 { gap: var(--spacing-xl); }

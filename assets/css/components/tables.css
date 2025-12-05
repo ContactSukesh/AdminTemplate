@@ -1,0 +1,178 @@
+/* ================================
+   Table Component Styles
+   ================================ */
+
+.table-container {
+    overflow-x: auto;
+    border-radius: var(--border-radius-lg);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+}
+
+.table thead {
+    background-color: var(--body-bg);
+}
+
+.table th {
+    padding: var(--spacing-md) var(--spacing-lg);
+    text-align: left;
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-heading);
+    text-transform: uppercase;
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.table td {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
+    vertical-align: middle;
+}
+
+.table tbody tr {
+    transition: var(--transition-fast);
+}
+
+.table tbody tr:hover {
+    background-color: var(--body-bg);
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Table Cell Content */
+.table-user {
+    /* Bootstrap handles flex */
+}
+
+.table-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.table-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.table-avatar-initial {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    color: white;
+}
+
+.table-user-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.table-user-name {
+    font-weight: var(--font-weight-medium);
+    color: var(--text-heading);
+    margin-bottom: 2px;
+}
+
+.table-user-email {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+}
+
+/* Badge */
+.badge {
+    padding: 4px 10px;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    line-height: 1;
+    border-radius: var(--border-radius-sm);
+    white-space: nowrap;
+}
+
+.badge-primary {
+    background-color: var(--primary-012);
+    color: var(--primary);
+}
+
+.badge-success {
+    background-color: rgba(113, 221, 55, 0.12);
+    color: var(--success);
+}
+
+.badge-info {
+    background-color: rgba(3, 195, 236, 0.12);
+    color: var(--info);
+}
+
+.badge-warning {
+    background-color: rgba(255, 171, 0, 0.12);
+    color: var(--warning);
+}
+
+.badge-danger {
+    background-color: rgba(255, 62, 29, 0.12);
+    color: var(--danger);
+}
+
+.badge-dot::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: currentColor;
+}
+
+/* Action Buttons */
+.table-actions {
+    /* Bootstrap handles flex */
+}
+
+.action-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius-sm);
+    color: var(--text-secondary);
+    transition: var(--transition-fast);
+    cursor: pointer;
+}
+
+.action-icon:hover {
+    background-color: var(--body-bg);
+    color: var(--text-heading);
+}
+
+.action-icon.text-primary:hover {
+    background-color: var(--primary-012);
+    color: var(--primary);
+}
+
+.action-icon.text-danger:hover {
+    background-color: rgba(255, 62, 29, 0.12);
+    color: var(--danger);
+}
+
+/* Responsive Table */
+@media (max-width: 767.98px) {
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}

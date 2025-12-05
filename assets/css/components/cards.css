@@ -1,0 +1,227 @@
+/* ================================
+   Card Component Styles
+   ================================ */
+
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-base);
+    overflow: hidden;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.card-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+    flex-wrap: wrap;
+}
+
+.card-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-heading);
+    margin: 0;
+}
+
+.card-subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin-top: var(--spacing-xs);
+}
+
+.card-body {
+    padding: var(--spacing-lg);
+}
+
+.card-footer {
+    padding: var(--spacing-lg);
+    border-top: 1px solid var(--border-color);
+    background-color: var(--body-bg);
+}
+
+/* Card Actions */
+.card-actions {
+    flex-shrink: 0;
+}
+
+.card-action-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius-sm);
+    color: var(--text-secondary);
+    transition: var(--transition-fast);
+}
+
+.card-action-btn:hover {
+    background-color: var(--body-bg);
+    color: var(--text-heading);
+}
+
+/* Card Variants */
+.card-primary {
+    border-color: var(--primary);
+}
+
+.card-success {
+    border-color: var(--success);
+}
+
+.card-info {
+    border-color: var(--info);
+}
+
+.card-warning {
+    border-color: var(--warning);
+}
+
+.card-danger {
+    border-color: var(--danger);
+}
+
+/* Statistics Card */
+.stats-card {
+    position: relative;
+}
+
+.stats-card .card-body {
+    /* Bootstrap handles flex layout */
+}
+
+.stats-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--border-radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    flex-shrink: 0;
+}
+
+.stats-icon.bg-primary {
+    background-color: var(--primary-012);
+    color: var(--primary);
+}
+
+.stats-icon.bg-success {
+    background-color: rgba(113, 221, 55, 0.12);
+    color: var(--success);
+}
+
+.stats-icon.bg-info {
+    background-color: rgba(3, 195, 236, 0.12);
+    color: var(--info);
+}
+
+.stats-icon.bg-warning {
+    background-color: rgba(255, 171, 0, 0.12);
+    color: var(--warning);
+}
+
+.stats-icon.bg-danger {
+    background-color: rgba(255, 62, 29, 0.12);
+    color: var(--danger);
+}
+
+.stats-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.stats-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stats-value {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-heading);
+    line-height: 1;
+}
+
+.stats-trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    margin-top: var(--spacing-sm);
+}
+
+.stats-trend.positive {
+    color: var(--success);
+}
+
+.stats-trend.negative {
+    color: var(--danger);
+}
+
+/* Card with Image */
+.card-img-top {
+    width: 100%;
+    height: auto;
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+}
+
+.card-img-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: var(--spacing-lg);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%);
+    border-radius: var(--border-radius-lg);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+/* Compact Card */
+.card-compact .card-header,
+.card-compact .card-body,
+.card-compact .card-footer {
+    padding: var(--spacing-md);
+}
+
+/* No Border Card */
+.card-no-border {
+    border: none;
+}
+
+/* Card Loading State */
+.card-loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.card-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-light);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}

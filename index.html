@@ -6,7 +6,7 @@
     <title>Admin Dashboard - Glassmorphism</title>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23667eea'/%3E%3Cstop offset='100%25' style='stop-color:%23764ba2'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='url(%23g)'/%3E%3Cpath d='M50 25L75 45L75 70L50 85L25 70L25 45Z' fill='white' opacity='0.9'/%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23015fc9'/%3E%3Cstop offset='100%25' style='stop-color:%230ce0ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='url(%23g)'/%3E%3Cpath d='M50 25L75 45L75 70L50 85L25 70L25 45Z' fill='white' opacity='0.9'/%3E%3C/svg%3E">
     
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -19,9 +19,9 @@
     
     <style>
         :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --accent-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --cyan-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --primary-gradient: linear-gradient(135deg, #015fc9 0%, #0ce0ff 100%);
+            --accent-gradient: linear-gradient(135deg, #C115EC 0%, #f5576c 100%);
+            --cyan-gradient: linear-gradient(135deg, #015fc9 0%, #0ce0ff 100%);
             --green-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
             --orange-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
             --glass-bg: rgba(255, 255, 255, 0.08);
@@ -45,7 +45,7 @@
         body {
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
-            background: linear-gradient(135deg, #050508 0%, #0a0a15 25%, #080812 50%, #0d0d1a 75%, #0a0a12 100%);
+            background: linear-gradient(135deg, #00022A 0%, #000D33 50%, #00022B 100%);
             background-attachment: fixed;
             color: var(--text-primary);
             overflow-x: hidden;
@@ -72,7 +72,7 @@
         .bg-animated .orb-1 {
             width: 600px;
             height: 600px;
-            background: linear-gradient(135deg, #4a3f8a, #5c3d7a);
+            background: linear-gradient(135deg, #015fc9, #0077e6);
             top: -200px;
             left: -150px;
             animation-delay: 0s;
@@ -81,7 +81,7 @@
         .bg-animated .orb-2 {
             width: 500px;
             height: 500px;
-            background: linear-gradient(135deg, #8a3070, #6a2050);
+            background: linear-gradient(135deg, #C115EC, #8b0ab8);
             top: 40%;
             right: -100px;
             animation-delay: -5s;
@@ -90,7 +90,7 @@
         .bg-animated .orb-3 {
             width: 450px;
             height: 450px;
-            background: linear-gradient(135deg, #2a5a8a, #1a4a6a);
+            background: linear-gradient(135deg, #0ce0ff, #00b4d8);
             bottom: -150px;
             left: 25%;
             animation-delay: -10s;
@@ -99,7 +99,7 @@
         .bg-animated .orb-4 {
             width: 300px;
             height: 300px;
-            background: linear-gradient(135deg, #1a6a5a, #0a4a3a);
+            background: linear-gradient(135deg, #015fc9, #0077e6);
             top: 60%;
             left: 10%;
             animation-delay: -15s;
@@ -174,7 +174,7 @@
             align-items: center;
             justify-content: center;
             font-size: 24px;
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 24px rgba(1, 95, 201, 0.5);
         }
 
         .sidebar-logo .logo-text {
@@ -235,7 +235,7 @@
         }
 
         .nav-link:hover {
-            box-shadow: 0 0 30px rgba(102, 126, 234, 0.2);
+            box-shadow: 0 0 30px rgba(1, 95, 201, 0.3);
         }
 
         .nav-link i {
@@ -350,7 +350,7 @@
             outline: none;
             background: rgba(255, 255, 255, 0.12);
             border-color: var(--glass-border-hover);
-            box-shadow: 0 0 30px rgba(102, 126, 234, 0.15);
+            box-shadow: 0 0 30px rgba(1, 95, 201, 0.25);
             width: 320px;
         }
 
@@ -433,7 +433,7 @@
             justify-content: center;
             font-weight: 600;
             font-size: 16px;
-            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 16px rgba(1, 95, 201, 0.4);
             position: relative;
         }
 
@@ -520,8 +520,8 @@
             opacity: 0.6;
         }
 
-        .stat-card.purple .card-glow { background: #667eea; }
-        .stat-card.cyan .card-glow { background: #4facfe; }
+        .stat-card.purple .card-glow { background: #015fc9; }
+        .stat-card.cyan .card-glow { background: #0ce0ff; }
         .stat-card.green .card-glow { background: #43e97b; }
         .stat-card.orange .card-glow { background: #fa709a; }
 
@@ -546,12 +546,12 @@
 
         .stat-icon.purple {
             background: var(--primary-gradient);
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 24px rgba(1, 95, 201, 0.5);
         }
 
         .stat-icon.cyan {
             background: var(--cyan-gradient);
-            box-shadow: 0 8px 24px rgba(79, 172, 254, 0.4);
+            box-shadow: 0 8px 24px rgba(12, 224, 255, 0.4);
         }
 
         .stat-icon.green {
@@ -632,7 +632,7 @@
 
         .chart-placeholder {
             height: 320px;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
+            background: linear-gradient(135deg, rgba(1, 95, 201, 0.08), rgba(12, 224, 255, 0.08));
             border-radius: 16px;
             display: flex;
             align-items: center;
@@ -652,7 +652,7 @@
             left: 0;
             right: 0;
             height: 60%;
-            background: linear-gradient(180deg, transparent, rgba(102, 126, 234, 0.1));
+            background: linear-gradient(180deg, transparent, rgba(1, 95, 201, 0.15));
         }
 
         .chart-placeholder i {
@@ -716,11 +716,11 @@
         .section-action.primary {
             background: var(--primary-gradient);
             border: none;
-            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 16px rgba(1, 95, 201, 0.4);
         }
 
         .section-action.primary:hover {
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 24px rgba(1, 95, 201, 0.5);
         }
 
         /* Table Styles */
@@ -884,9 +884,9 @@
         }
 
         .action-btn.view:hover {
-            background: rgba(102, 126, 234, 0.2);
-            color: #667eea;
-            border-color: rgba(102, 126, 234, 0.3);
+            background: rgba(1, 95, 201, 0.2);
+            color: #0ce0ff;
+            border-color: rgba(1, 95, 201, 0.4);
         }
 
         .action-btn.edit:hover {
@@ -916,13 +916,13 @@
             font-size: 24px;
             cursor: pointer;
             z-index: 1001;
-            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.5);
+            box-shadow: 0 8px 32px rgba(1, 95, 201, 0.5);
             transition: all 0.3s ease;
         }
 
         .sidebar-toggle:hover {
             transform: scale(1.05);
-            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.6);
+            box-shadow: 0 12px 40px rgba(1, 95, 201, 0.6);
         }
 
         .sidebar-overlay {
@@ -1118,26 +1118,26 @@
         </div>
         <ul class="nav-menu">
             <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="index.html" class="nav-link active">
                     <i class="bi bi-grid-1x2-fill"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="customers.html" class="nav-link">
                     <i class="bi bi-people-fill"></i>
-                    <span>Users</span>
+                    <span>Customers</span>
                     <span class="nav-badge">128</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="analytics.html" class="nav-link">
                     <i class="bi bi-bar-chart-fill"></i>
                     <span>Analytics</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="orders.html" class="nav-link">
                     <i class="bi bi-cart-fill"></i>
                     <span>Orders</span>
                     <span class="nav-badge">24</span>

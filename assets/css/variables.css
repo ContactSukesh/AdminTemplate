@@ -1,0 +1,178 @@
+/* ================================
+   CSS Variables - Global Design Tokens
+   ================================ */
+
+:root {
+    /* Primary Colors */
+    --primary: #696cff;
+    --primary-light: #7c7fff;
+    --primary-dark: #5f61e6;
+    --primary-rgb: 105, 108, 255;
+    
+    /* Secondary Colors */
+    --secondary: #8592a3;
+    --secondary-light: #9da8b6;
+    --secondary-dark: #7a8697;
+    
+    /* Success */
+    --success: #71dd37;
+    --success-light: #85e150;
+    --success-dark: #66c732;
+    
+    /* Info */
+    --info: #03c3ec;
+    --info-light: #1ccfef;
+    --info-dark: #03b0d7;
+    
+    /* Warning */
+    --warning: #ffab00;
+    --warning-light: #ffb81a;
+    --warning-dark: #e69a00;
+    
+    /* Danger */
+    --danger: #ff3e1d;
+    --danger-light: #ff5837;
+    --danger-dark: #e6381a;
+    
+    /* Background Colors - Light Theme */
+    --body-bg: #f5f5f9;
+    --surface-bg: #ffffff;
+    --card-bg: #ffffff;
+    
+    /* Text Colors - Light Theme */
+    --text-primary: #566a7f;
+    --text-secondary: #8592a3;
+    --text-muted: #a1acb8;
+    --text-heading: #384551;
+    --text-white: #ffffff;
+    
+    /* Border Colors */
+    --border-color: #dbdade;
+    --border-light: #ebeef0;
+    --border-dark: #c4c8cc;
+    
+    /* Shadow */
+    --shadow-xs: 0 2px 4px 0 rgba(105, 108, 255, 0.1);
+    --shadow-sm: 0 2px 6px 0 rgba(67, 89, 113, 0.12);
+    --shadow-md: 0 4px 8px 0 rgba(67, 89, 113, 0.15);
+    --shadow-lg: 0 6px 14px 0 rgba(67, 89, 113, 0.18);
+    --shadow-xl: 0 8px 20px 0 rgba(67, 89, 113, 0.2);
+    
+    /* Sidebar */
+    --sidebar-width: 260px;
+    --sidebar-bg: #ffffff;
+    --sidebar-hover-bg: #f5f5f9;
+    --sidebar-active-bg: rgba(105, 108, 255, 0.12);
+    --sidebar-border: #dbdade;
+    
+    /* Navbar */
+    --navbar-height: 64px;
+    --navbar-bg: #ffffff;
+    --navbar-border: #dbdade;
+    
+    /* Border Radius */
+    --border-radius-xs: 0.25rem;
+    --border-radius-sm: 0.375rem;
+    --border-radius-md: 0.5rem;
+    --border-radius-lg: 0.625rem;
+    --border-radius-xl: 0.75rem;
+    --border-radius-pill: 50rem;
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    
+    /* Typography */
+    --font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.8125rem;
+    --font-size-base: 0.9375rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 2rem;
+    
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    
+    --line-height-xs: 1.25;
+    --line-height-sm: 1.35;
+    --line-height-base: 1.5;
+    --line-height-lg: 1.75;
+    
+    /* Transitions */
+    --transition-base: all 0.2s ease-in-out;
+    --transition-fast: all 0.15s ease-in-out;
+    --transition-slow: all 0.3s ease-in-out;
+    
+    /* Z-index */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+}
+
+/* Dark Theme Variables */
+[data-theme="dark"] {
+    /* Background Colors - Dark Theme */
+    --body-bg: #25293c;
+    --surface-bg: #2b2c40;
+    --card-bg: #2b2c40;
+    
+    /* Text Colors - Dark Theme */
+    --text-primary: #c3c4d1;
+    --text-secondary: #9a9ba6;
+    --text-muted: #797b86;
+    --text-heading: #e3e4eb;
+    
+    /* Border Colors - Dark Theme */
+    --border-color: #3b3d52;
+    --border-light: #353747;
+    --border-dark: #45475a;
+    
+    /* Sidebar - Dark Theme */
+    --sidebar-bg: #2b2c40;
+    --sidebar-hover-bg: #32334a;
+    --sidebar-active-bg: rgba(105, 108, 255, 0.16);
+    --sidebar-border: #3b3d52;
+    
+    /* Navbar - Dark Theme */
+    --navbar-bg: #2b2c40;
+    --navbar-border: #3b3d52;
+    
+    /* Shadow - Dark Theme */
+    --shadow-xs: 0 2px 4px 0 rgba(15, 20, 34, 0.4);
+    --shadow-sm: 0 2px 6px 0 rgba(15, 20, 34, 0.4);
+    --shadow-md: 0 4px 8px 0 rgba(15, 20, 34, 0.4);
+    --shadow-lg: 0 6px 14px 0 rgba(15, 20, 34, 0.4);
+    --shadow-xl: 0 8px 20px 0 rgba(15, 20, 34, 0.4);
+}
+
+/* Semi-dark Theme Variables */
+[data-theme="semi-dark"] {
+    --sidebar-bg: #2b2c40;
+    --sidebar-hover-bg: #32334a;
+    --sidebar-active-bg: rgba(105, 108, 255, 0.16);
+    --sidebar-border: #3b3d52;
+    --text-primary-sidebar: #c3c4d1;
+    --text-secondary-sidebar: #9a9ba6;
+}
+
+/* Color Opacity Utilities */
+:root {
+    --primary-005: rgba(var(--primary-rgb), 0.05);
+    --primary-008: rgba(var(--primary-rgb), 0.08);
+    --primary-012: rgba(var(--primary-rgb), 0.12);
+    --primary-016: rgba(var(--primary-rgb), 0.16);
+    --primary-020: rgba(var(--primary-rgb), 0.20);
+}

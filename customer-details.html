@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Details - Admin Dashboard</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23015fc9'/%3E%3Cstop offset='100%25' style='stop-color:%230ce0ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='url(%23g)'/%3E%3Cpath d='M50 25L75 45L75 70L50 85L25 70L25 45Z' fill='white' opacity='0.9'/%3E%3C/svg%3E">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #015fc9 0%, #0ce0ff 100%);
+            --accent-gradient: linear-gradient(135deg, #C115EC 0%, #f5576c 100%);
+            --cyan-gradient: linear-gradient(135deg, #015fc9 0%, #0ce0ff 100%);
+            --green-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --orange-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-bg-hover: rgba(255, 255, 255, 0.12);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-border-hover: rgba(255, 255, 255, 0.25);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --glass-shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.4);
+            --sidebar-width: 280px;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.65);
+            --text-muted: rgba(255, 255, 255, 0.45);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #00022A 0%, #000D33 50%, #00022B 100%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animated {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .bg-animated .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.35;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .bg-animated .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, #015fc9, #0077e6);
+            top: -200px;
+            left: -150px;
+        }
+
+        .bg-animated .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #C115EC, #8b0ab8);
+            top: 40%;
+            right: -100px;
+            animation-delay: -5s;
+        }
+
+        .bg-animated .orb-3 {
+            width: 450px;
+            height: 450px;
+            background: linear-gradient(135deg, #0ce0ff, #00b4d8);
+            bottom: -150px;
+            left: 25%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(30px, -30px) rotate(5deg); }
+            50% { transform: translate(-20px, 20px) rotate(-5deg); }
+            75% { transform: translate(20px, 10px) rotate(3deg); }
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-right: 1px solid var(--glass-border);
+            padding: 28px 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.4s ease;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 0 12px 28px;
+            border-bottom: 1px solid var(--glass-border);
+            margin-bottom: 28px;
+        }
+
+        .sidebar-logo .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-gradient);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 8px 24px rgba(1, 95, 201, 0.5);
+        }
+
+        .sidebar-logo .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.8) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+        }
+
+        .nav-item { margin-bottom: 6px; }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-gradient);
+            border-radius: 0 4px 4px 0;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: var(--glass-bg-hover);
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .nav-link.active::before { transform: scaleY(1); }
+
+        .nav-link i {
+            font-size: 20px;
+            width: 26px;
+            text-align: center;
+        }
+
+        .nav-link span {
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--accent-gradient);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            padding-top: 20px;
+            border-top: 1px solid var(--glass-border);
+            margin-top: auto;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            padding: 28px;
+        }
+
+        /* Top Navbar */
+        .top-navbar {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 18px 28px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--text-primary);
+            transform: translateX(-4px);
+        }
+
+        .page-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.85) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 12px 18px 12px 48px;
+            color: var(--text-primary);
+            width: 280px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input::placeholder { color: var(--text-muted); }
+
+        .search-box input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--glass-border-hover);
+            box-shadow: 0 0 30px rgba(1, 95, 201, 0.25);
+            width: 320px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        .nav-icon-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        .nav-icon-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-icon-btn .badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 22px;
+            height: 22px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(26, 26, 62, 0.8);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            padding: 8px 16px 8px 8px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .user-profile:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--glass-border);
+        }
+
+        .user-avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 16px rgba(1, 95, 201, 0.4);
+            position: relative;
+        }
+
+        .user-avatar::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            background: #43e97b;
+            border-radius: 50%;
+            border: 2px solid rgba(26, 26, 62, 0.8);
+        }
+
+        .user-info { display: none; }
+
+        @media (min-width: 768px) {
+            .user-info { display: block; }
+        }
+
+        .user-info .name {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .user-info .role {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .dropdown-menu {
+            background: rgba(20, 20, 50, 0.95);
+            backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 8px;
+            margin-top: 10px;
+            min-width: 200px;
+        }
+
+        .dropdown-item {
+            color: var(--text-secondary);
+            padding: 12px 16px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+        }
+
+        .dropdown-item i { font-size: 16px; }
+
+        .dropdown-divider {
+            border-color: var(--glass-border);
+            margin: 8px 0;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-title i {
+            color: #0ce0ff;
+        }
+
+        /* Profile Header */
+        .profile-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 28px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid var(--glass-border);
+            margin-bottom: 28px;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 24px;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 12px 40px rgba(1, 95, 201, 0.5);
+            flex-shrink: 0;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .profile-email {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .profile-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .profile-tag {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .profile-tag.vip {
+            background: linear-gradient(135deg, rgba(250, 204, 21, 0.2), rgba(245, 158, 11, 0.2));
+            color: #fbbf24;
+        }
+
+        .profile-tag.verified {
+            background: rgba(67, 233, 123, 0.15);
+            color: #43e97b;
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .status-badge.active {
+            background: rgba(67, 233, 123, 0.15);
+            color: #43e97b;
+        }
+        .status-badge.active::before { background: #43e97b; }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-4px);
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .info-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .info-content {
+            flex: 1;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 15px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Activity Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            bottom: 10px;
+            width: 2px;
+            background: var(--glass-border);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 24px;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -26px;
+            top: 4px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            box-shadow: 0 0 0 4px rgba(1, 95, 201, 0.2);
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 16px 20px;
+        }
+
+        .timeline-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .timeline-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .timeline-time {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Orders Table */
+        .custom-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .custom-table th {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 14px 18px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .custom-table th:first-child { border-radius: 12px 0 0 0; }
+        .custom-table th:last-child { border-radius: 0 12px 0 0; }
+
+        .custom-table td {
+            padding: 16px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 14px;
+        }
+
+        .custom-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .custom-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .order-status {
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .order-status.delivered {
+            background: rgba(67, 233, 123, 0.15);
+            color: #43e97b;
+        }
+
+        .order-status.processing {
+            background: rgba(1, 95, 201, 0.15);
+            color: #0ce0ff;
+        }
+
+        .order-status.pending {
+            background: rgba(250, 204, 21, 0.15);
+            color: #facc15;
+        }
+
+        .order-status.cancelled {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        /* Notes Section */
+        .note-item {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+        }
+
+        .note-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .note-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .note-author {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .note-date {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .note-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .add-note-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px dashed var(--glass-border);
+            color: var(--text-muted);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .add-note-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
+            border-color: var(--glass-border-hover);
+        }
+
+        /* Mobile Sidebar Toggle */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: 0 8px 32px rgba(1, 95, 201, 0.5);
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 991.98px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+            .sidebar-toggle { display: flex; align-items: center; justify-content: center; }
+            .sidebar-overlay.active { display: block; }
+            .profile-header { flex-direction: column; align-items: center; text-align: center; }
+            .profile-tags { justify-content: center; }
+            .info-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 767.98px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .top-navbar { padding: 14px 18px; }
+            .glass-card { padding: 20px; }
+            .main-content { padding: 16px; }
+            .navbar-actions { flex-wrap: wrap; }
+            .profile-avatar { width: 100px; height: 100px; font-size: 36px; }
+            .profile-name { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animated">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">
+                <i class="bi bi-hexagon-fill"></i>
+            </div>
+            <span class="logo-text">AdminPro</span>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="index.html" class="nav-link">
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="customers.html" class="nav-link active">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Customers</span>
+                    <span class="nav-badge">128</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="analytics.html" class="nav-link">
+                    <i class="bi bi-bar-chart-fill"></i>
+                    <span>Analytics</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="orders.html" class="nav-link">
+                    <i class="bi bi-cart-fill"></i>
+                    <span>Orders</span>
+                    <span class="nav-badge">24</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="bi bi-chat-dots-fill"></i>
+                    <span>Messages</span>
+                    <span class="nav-badge">7</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="bi bi-folder-fill"></i>
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="bi bi-calendar-event-fill"></i>
+                    <span>Calendar</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="bi bi-gear-fill"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="login.html" class="nav-link logout">
+                <i class="bi bi-box-arrow-left"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navbar -->
+        <nav class="top-navbar">
+            <div class="page-header">
+                <a href="customers.html" class="back-btn">
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+                <div>
+                    <h1 class="page-title">Customer Details</h1>
+                    <p class="page-subtitle">View and manage customer information</p>
+                </div>
+            </div>
+            <div class="navbar-actions">
+                <div class="search-box d-none d-lg-block">
+                    <i class="bi bi-search"></i>
+                    <input type="text" placeholder="Search anything...">
+                </div>
+                <div class="nav-icon-btn">
+                    <i class="bi bi-bell-fill"></i>
+                    <span class="badge">5</span>
+                </div>
+                <div class="nav-icon-btn d-none d-md-flex">
+                    <i class="bi bi-envelope-fill"></i>
+                </div>
+                <div class="dropdown">
+                    <div class="user-profile" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="user-avatar">JD</div>
+                        <div class="user-info">
+                            <div class="name">John Doe</div>
+                            <div class="role">Administrator</div>
+                        </div>
+                        <i class="bi bi-chevron-down ms-1 d-none d-md-block" style="font-size: 12px; color: var(--text-muted);"></i>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i>My Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i>Settings</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-question-circle"></i>Help Center</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="login.html"><i class="bi bi-box-arrow-left"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="row g-4">
+            <!-- Left Column -->
+            <div class="col-lg-8">
+                <!-- Profile Card -->
+                <div class="glass-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar">JD</div>
+                        <div class="profile-info">
+                            <h2 class="profile-name">John Doe</h2>
+                            <p class="profile-email">john.doe@email.com</p>
+                            <div class="profile-tags">
+                                <span class="status-badge active">Active</span>
+                                <span class="profile-tag vip">
+                                    <i class="bi bi-star-fill"></i> VIP Member
+                                </span>
+                                <span class="profile-tag verified">
+                                    <i class="bi bi-patch-check-fill"></i> Verified
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">24</div>
+                            <div class="stat-label">Total Orders</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">$4,890</div>
+                            <div class="stat-label">Total Spent</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">$203.75</div>
+                            <div class="stat-label">Avg. Order</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">847</div>
+                            <div class="stat-label">Loyalty Points</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Orders -->
+                <div class="glass-card">
+                    <h3 class="card-title">
+                        <i class="bi bi-bag-check"></i>
+                        Recent Orders
+                    </h3>
+                    <div class="table-responsive">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Date</th>
+                                    <th>Items</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#ORD-2024-1247</td>
+                                    <td>Jan 15, 2024</td>
+                                    <td>3 items</td>
+                                    <td>$284.00</td>
+                                    <td><span class="order-status delivered">Delivered</span></td>
+                                </tr>
+                                <tr>
+                                    <td>#ORD-2024-1198</td>
+                                    <td>Jan 10, 2024</td>
+                                    <td>1 item</td>
+                                    <td>$89.00</td>
+                                    <td><span class="order-status processing">Processing</span></td>
+                                </tr>
+                                <tr>
+                                    <td>#ORD-2024-1156</td>
+                                    <td>Jan 5, 2024</td>
+                                    <td>5 items</td>
+                                    <td>$456.00</td>
+                                    <td><span class="order-status delivered">Delivered</span></td>
+                                </tr>
+                                <tr>
+                                    <td>#ORD-2024-1102</td>
+                                    <td>Dec 28, 2023</td>
+                                    <td>2 items</td>
+                                    <td>$178.00</td>
+                                    <td><span class="order-status delivered">Delivered</span></td>
+                                </tr>
+                                <tr>
+                                    <td>#ORD-2024-1089</td>
+                                    <td>Dec 20, 2023</td>
+                                    <td>1 item</td>
+                                    <td>$64.00</td>
+                                    <td><span class="order-status cancelled">Cancelled</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Activity Timeline -->
+                <div class="glass-card">
+                    <h3 class="card-title">
+                        <i class="bi bi-clock-history"></i>
+                        Activity Timeline
+                    </h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Order Placed</div>
+                                <div class="timeline-desc">Placed order #ORD-2024-1198 for $89.00</div>
+                                <div class="timeline-time">2 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Profile Updated</div>
+                                <div class="timeline-desc">Updated shipping address</div>
+                                <div class="timeline-time">Yesterday at 3:45 PM</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Order Delivered</div>
+                                <div class="timeline-desc">Order #ORD-2024-1247 was delivered successfully</div>
+                                <div class="timeline-time">Jan 15, 2024</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Loyalty Points Earned</div>
+                                <div class="timeline-desc">Earned 28 points from order #ORD-2024-1247</div>
+                                <div class="timeline-time">Jan 15, 2024</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Account Created</div>
+                                <div class="timeline-desc">Customer account was created and verified</div>
+                                <div class="timeline-time">Mar 12, 2023</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-lg-4">
+                <!-- Contact Information -->
+                <div class="glass-card">
+                    <h3 class="card-title">
+                        <i class="bi bi-person-lines-fill"></i>
+                        Contact Information
+                    </h3>
+                    <div class="info-grid" style="grid-template-columns: 1fr;">
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="bi bi-telephone"></i>
+                            </div>
+                            <div class="info-content">
+                                <div class="info-label">Phone</div>
+                                <div class="info-value">+1 (555) 123-4567</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                            <div class="info-content">
+                                <div class="info-label">Email</div>
+                                <div class="info-value">john.doe@email.com</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="bi bi-geo-alt"></i>
+                            </div>
+                            <div class="info-content">
+                                <div class="info-label">Location</div>
+                                <div class="info-value">New York, NY 10001, USA</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="bi bi-building"></i>
+                            </div>
+                            <div class="info-content">
+                                <div class="info-label">Company</div>
+                                <div class="info-value">Tech Solutions Inc.</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="bi bi-calendar"></i>
+                            </div>
+                            <div class="info-content">
+                                <div class="info-label">Customer Since</div>
+                                <div class="info-value">March 12, 2023</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shipping Address -->
+                <div class="glass-card">
+                    <h3 class="card-title">
+                        <i class="bi bi-truck"></i>
+                        Shipping Address
+                    </h3>
+                    <div class="info-item" style="background: rgba(255,255,255,0.04); padding: 16px; border-radius: 12px;">
+                        <div class="info-icon">
+                            <i class="bi bi-house"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Default Address</div>
+                            <div class="info-value">
+                                John Doe<br>
+                                123 Main Street, Apt 4B<br>
+                                New York, NY 10001<br>
+                                United States
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div class="glass-card">
+                    <h3 class="card-title">
+                        <i class="bi bi-sticky"></i>
+                        Internal Notes
+                    </h3>
+                    <div class="note-item">
+                        <div class="note-header">
+                            <span class="note-author">Admin User</span>
+                            <span class="note-date">Jan 10, 2024</span>
+                        </div>
+                        <p class="note-text">VIP customer - always ensure priority shipping on their orders.</p>
+                    </div>
+                    <div class="note-item">
+                        <div class="note-header">
+                            <span class="note-author">Support Team</span>
+                            <span class="note-date">Dec 15, 2023</span>
+                        </div>
+                        <p class="note-text">Prefers email communication over phone calls.</p>
+                    </div>
+                    <button class="add-note-btn">
+                        <i class="bi bi-plus"></i>
+                        Add New Note
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Mobile Sidebar Toggle -->
+    <button class="sidebar-toggle" id="sidebarToggle">
+        <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Sidebar Toggle
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+        });
+
+        sidebarOverlay.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!-- Navbar Component -->
+<nav class="navbar">
+    <!-- Navbar Left -->
+    <div class="navbar-left d-flex align-items-center gap-2 gap-md-3 flex-grow-1">
+        <!-- Sidebar Toggle -->
+        <button class="navbar-toggle" type="button">
+            <i class="bi bi-list icon"></i>
+        </button>
+
+        <!-- Search -->
+        <div class="navbar-search">
+            <i class="bi bi-search navbar-search-icon"></i>
+            <input 
+                type="text" 
+                class="navbar-search-input" 
+                placeholder="Search (Ctrl+K)"
+            >
+            <span class="navbar-search-shortcut">⌘K</span>
+        </div>
+    </div>
+
+    <!-- Navbar Right -->
+    <div class="navbar-right d-flex align-items-center gap-2">
+        <!-- Theme Toggle -->
+        <div class="navbar-icon-btn" data-theme-toggle="dark" data-tooltip="Toggle Theme">
+            <i class="bi bi-moon icon"></i>
+        </div>
+
+        <!-- Notifications -->
+        <div class="navbar-icon-btn" data-dropdown="notificationDropdown">
+            <i class="bi bi-bell icon"></i>
+            <span class="badge">5</span>
+        </div>
+
+        <!-- Messages -->
+        <div class="navbar-icon-btn d-none d-md-flex" data-dropdown="messageDropdown">
+            <i class="bi bi-envelope icon"></i>
+            <span class="badge">3</span>
+        </div>
+
+        <!-- User Profile -->
+        <div class="navbar-user" data-dropdown="userDropdown">
+            <div class="navbar-user-trigger">
+                <div class="navbar-user-avatar">
+                    <div class="avatar-initial">JD</div>
+                    <span class="status-indicator"></span>
+                </div>
+                <div class="navbar-user-info">
+                    <div class="navbar-user-name">John Doe</div>
+                    <div class="navbar-user-role">Admin</div>
+                </div>
+                <i class="bi bi-chevron-down navbar-user-chevron"></i>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Notification Dropdown -->
+<div class="navbar-dropdown" id="notificationDropdown">
+    <div class="navbar-dropdown-header">
+        <h6 class="navbar-dropdown-title">Notifications</h6>
+    </div>
+    <div class="navbar-dropdown-list">
+        <a href="#" class="navbar-dropdown-item">
+            <div class="d-flex align-items-center gap-3 w-100">
+                <div class="stats-icon bg-primary" style="width: 40px; height: 40px; font-size: 1rem;">
+                    <i class="bi bi-cart"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <div class="fw-medium text-heading">New Order Received</div>
+                    <small class="text-muted">5 minutes ago</small>
+                </div>
+            </div>
+        </a>
+        <a href="#" class="navbar-dropdown-item">
+            <div class="d-flex align-items-center gap-3 w-100">
+                <div class="stats-icon bg-success" style="width: 40px; height: 40px; font-size: 1rem;">
+                    <i class="bi bi-person-check"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <div class="fw-medium text-heading">New User Registered</div>
+                    <small class="text-muted">15 minutes ago</small>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="navbar-dropdown-divider"></div>
+    <a href="notifications.html" class="navbar-dropdown-item text-center">
+        <small class="text-primary fw-medium">View All Notifications</small>
+    </a>
+</div>
+
+<!-- Message Dropdown -->
+<div class="navbar-dropdown" id="messageDropdown">
+    <div class="navbar-dropdown-header">
+        <h6 class="navbar-dropdown-title">Messages</h6>
+    </div>
+    <div class="navbar-dropdown-list">
+        <a href="#" class="navbar-dropdown-item">
+            <div class="d-flex align-items-center gap-3 w-100">
+                <div class="navbar-user-avatar">
+                    <div class="avatar-initial" style="background: linear-gradient(135deg, #71dd37 0%, #38f9d7 100%);">SA</div>
+                </div>
+                <div class="flex-grow-1">
+                    <div class="fw-medium text-heading">Sarah Anderson</div>
+                    <small class="text-muted">Thanks for the update!</small>
+                </div>
+            </div>
+        </a>
+        <a href="#" class="navbar-dropdown-item">
+            <div class="d-flex align-items-center gap-3 w-100">
+                <div class="navbar-user-avatar">
+                    <div class="avatar-initial" style="background: linear-gradient(135deg, #03c3ec 0%, #00f2fe 100%);">MJ</div>
+                </div>
+                <div class="flex-grow-1">
+                    <div class="fw-medium text-heading">Michael Johnson</div>
+                    <small class="text-muted">Can we schedule a meeting?</small>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="navbar-dropdown-divider"></div>
+    <a href="messages.html" class="navbar-dropdown-item text-center">
+        <small class="text-primary fw-medium">View All Messages</small>
+    </a>
+</div>
+
+<!-- User Dropdown -->
+<div class="navbar-dropdown" id="userDropdown">
+    <div class="navbar-dropdown-header">
+        <div class="d-flex align-items-center gap-3">
+            <div class="navbar-user-avatar" style="width: 48px; height: 48px;">
+                <div class="avatar-initial">JD</div>
+            </div>
+            <div>
+                <div class="fw-semibold text-heading">John Doe</div>
+                <small class="text-muted">john.doe@example.com</small>
+            </div>
+        </div>
+    </div>
+    <div class="navbar-dropdown-divider"></div>
+    <div class="navbar-dropdown-list">
+        <a href="profile.html" class="navbar-dropdown-item">
+            <i class="bi bi-person"></i>
+            <span>My Profile</span>
+        </a>
+        <a href="settings.html" class="navbar-dropdown-item">
+            <i class="bi bi-gear"></i>
+            <span>Settings</span>
+        </a>
+        <a href="billing.html" class="navbar-dropdown-item">
+            <i class="bi bi-credit-card"></i>
+            <span>Billing</span>
+        </a>
+        <a href="help.html" class="navbar-dropdown-item">
+            <i class="bi bi-question-circle"></i>
+            <span>Help Center</span>
+        </a>
+    </div>
+    <div class="navbar-dropdown-divider"></div>
+    <a href="login.html" class="navbar-dropdown-item">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>Logout</span>
+    </a>
+</div>
