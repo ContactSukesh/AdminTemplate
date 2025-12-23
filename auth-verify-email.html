@@ -21,69 +21,118 @@
     <link rel="stylesheet" href="assets/css/components/auth.css">
 </head>
 <body>
-    <div class="auth-wrapper min-vh-100 d-flex align-items-center justify-content-center py-4">
-        <!-- Animated Background -->
-        <div class="bg-animated">
-            <div class="orb orb-1" style="background: linear-gradient(135deg, #43e97b, #38f9d7);"></div>
-            <div class="orb orb-2" style="background: linear-gradient(135deg, #015fc9, #0ce0ff);"></div>
-            <div class="orb orb-3" style="background: linear-gradient(135deg, #0ce0ff, #00b4d8);"></div>
-        </div>
-        
-        <!-- Particles -->
-        <div class="particles" id="particles"></div>
+    <!-- Cover Style Wrapper with Bootstrap -->
+    <div class="auth-cover-wrapper min-vh-100">
+        <div class="container-fluid h-100 p-0">
+            <div class="row g-0 h-100">
+                <!-- Animated Background -->
+                <div class="bg-animated">
+                    <div class="orb orb-1" style="background: linear-gradient(135deg, #43e97b, #38f9d7);"></div>
+                    <div class="orb orb-2" style="background: linear-gradient(135deg, #015fc9, #0ce0ff);"></div>
+                    <div class="orb orb-3" style="background: linear-gradient(135deg, #0ce0ff, #00b4d8);"></div>
+                </div>
+                
+                <!-- Particles -->
+                <div class="particles" id="particles"></div>
 
-        <!-- Auth Container -->
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
-                    <div class="auth-card">
-                        <!-- Success State -->
-                        <div class="auth-success text-center">
-                            <div class="auth-success-icon mx-auto mb-3">
-                                <i class="bi bi-envelope-check"></i>
+                <!-- Left Side - Brand Section -->
+                <div class="col-lg-7 col-xl-8">
+                    <div class="auth-cover-brand position-relative z-1 p-4 p-lg-5">
+                        <div class="brand-logo d-flex align-items-center gap-3 mb-4 mb-lg-5">
+                            <div class="brand-icon">
+                                <i class="bi bi-shield-lock"></i>
                             </div>
-                            <h3>Verify Your Email</h3>
-                            <p class="text-muted">
-                                We've sent a verification link to<br>
-                                <strong style="color: #0ce0ff;">john.doe@example.com</strong><br><br>
-                                Please check your inbox and click the link to verify your account.
-                            </p>
-                            
-                            <a href="auth-login.html" class="btn btn-primary w-100 py-2 text-decoration-none mt-3">
-                                <i class="bi bi-arrow-left me-2"></i>
-                                Back to Login
-                            </a>
+                            <h1 class="mb-0">AdminPro</h1>
                         </div>
-
-                        <!-- Resend Option -->
-                        <div class="resend-timer text-center mt-4">
-                            <p class="small">Didn't receive the email? <a href="#">Resend</a></p>
+                        <div class="brand-content mb-4">
+                            <h2 class="display-5 fw-bold mb-3 mb-lg-4">Verify Your Email</h2>
+                            <p class="lead mb-4">We've sent a verification link to your email address. Click the link to activate your account and get started.</p>
+                            <ul class="brand-features list-unstyled mb-5">
+                                <li class="d-flex align-items-center gap-3 mb-3">
+                                    <i class="bi bi-check-circle-fill"></i> 
+                                    <span>Secure Verification</span>
+                                </li>
+                                <li class="d-flex align-items-center gap-3 mb-3">
+                                    <i class="bi bi-check-circle-fill"></i> 
+                                    <span>Quick Activation</span>
+                                </li>
+                                <li class="d-flex align-items-center gap-3 mb-3">
+                                    <i class="bi bi-check-circle-fill"></i> 
+                                    <span>Email Protection</span>
+                                </li>
+                            </ul>
                         </div>
-
-                        <!-- Divider -->
-                        <div class="divider my-4">
-                            <span>open email app</span>
+                        <div class="brand-footer mt-auto">
+                            <div class="brand-stats d-flex gap-4 gap-lg-5">
+                                <div class="stat-item">
+                                    <h3 class="display-6 fw-bold mb-2">10K+</h3>
+                                    <p class="small mb-0">Active Users</p>
+                                </div>
+                                <div class="stat-item">
+                                    <h3 class="display-6 fw-bold mb-2">99.9%</h3>
+                                    <p class="small mb-0">Uptime</p>
+                                </div>
+                                <div class="stat-item">
+                                    <h3 class="display-6 fw-bold mb-2">4.9/5</h3>
+                                    <p class="small mb-0">Rating</p>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Email Providers -->
-                        <div class="row g-2">
-                            <div class="col-4">
-                                <a href="https://mail.google.com" target="_blank" class="btn btn-social w-100 d-flex flex-column align-items-center py-3">
-                                    <i class="bi bi-google" style="color: #ea4335;"></i>
-                                    <span class="small text-muted mt-2">Gmail</span>
+                <!-- Right Side - Form Section -->
+                <div class="col-lg-5 col-xl-4 auth-cover-right">
+                    <div class="auth-card-container w-100" style="max-width: 480px;">
+                        <div class="auth-card">
+                            <!-- Success State -->
+                            <div class="auth-success text-center">
+                                <div class="auth-success-icon mx-auto mb-3">
+                                    <i class="bi bi-envelope-check"></i>
+                                </div>
+                                <h3>Verify Your Email</h3>
+                                <p class="text-muted">
+                                    We've sent a verification link to<br>
+                                    <strong style="color: #0ce0ff;">john.doe@example.com</strong><br><br>
+                                    Please check your inbox and click the link to verify your account.
+                                </p>
+                                
+                                <a href="auth-login.html" class="btn btn-primary w-100 text-decoration-none mt-3">
+                                    <i class="bi bi-arrow-left me-2"></i>
+                                    Back to Login
                                 </a>
                             </div>
-                            <div class="col-4">
-                                <a href="https://outlook.live.com" target="_blank" class="btn btn-social w-100 d-flex flex-column align-items-center py-3">
-                                    <i class="bi bi-microsoft" style="color: #0078d4;"></i>
-                                    <span class="small text-muted mt-2">Outlook</span>
-                                </a>
+
+                            <!-- Resend Option -->
+                            <div class="resend-timer text-center mt-4">
+                                <p class="small mb-0">Didn't receive the email? <a href="#">Resend</a></p>
                             </div>
-                            <div class="col-4">
-                                <a href="https://mail.yahoo.com" target="_blank" class="btn btn-social w-100 d-flex flex-column align-items-center py-3">
-                                    <i class="bi bi-envelope" style="color: #6001d2;"></i>
-                                    <span class="small text-muted mt-2">Yahoo</span>
-                                </a>
+
+                            <!-- Divider -->
+                            <div class="divider my-4">
+                                <span>open email app</span>
+                            </div>
+
+                            <!-- Email Providers -->
+                            <div class="row g-2">
+                                <div class="col-4">
+                                    <a href="https://mail.google.com" target="_blank" class="btn btn-social w-100 d-flex flex-column align-items-center py-3">
+                                        <i class="bi bi-google" style="color: #ea4335;"></i>
+                                        <span class="small text-muted mt-2">Gmail</span>
+                                    </a>
+                                </div>
+                                <div class="col-4">
+                                    <a href="https://outlook.live.com" target="_blank" class="btn btn-social w-100 d-flex flex-column align-items-center py-3">
+                                        <i class="bi bi-microsoft" style="color: #0078d4;"></i>
+                                        <span class="small text-muted mt-2">Outlook</span>
+                                    </a>
+                                </div>
+                                <div class="col-4">
+                                    <a href="https://mail.yahoo.com" target="_blank" class="btn btn-social w-100 d-flex flex-column align-items-center py-3">
+                                        <i class="bi bi-envelope" style="color: #6001d2;"></i>
+                                        <span class="small text-muted mt-2">Yahoo</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -37,6 +37,213 @@ body {
     --auth-text-muted: rgba(255, 255, 255, 0.45);
 }
 
+/* ================================
+   Cover Style Layout with Bootstrap
+   ================================ */
+
+/* Cover Wrapper */
+.auth-cover-wrapper {
+    background: linear-gradient(135deg, #00022A 0%, #000D33 50%, #00022B 100%);
+    overflow: hidden;
+}
+
+/* Left Side - Brand Section */
+.auth-cover-left {
+    display: flex !important;
+    align-items: center !important;
+    padding: 60px 50px !important;
+}
+
+/* Right Side - Form Section */
+.auth-cover-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    min-height: 100vh;
+}
+
+/* Cover Right Form Control Overrides */
+.auth-cover-right .form-control {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 12px !important;
+    color: var(--auth-text-primary) !important;
+    padding: 14px 16px 14px 48px !important;
+}
+
+.auth-cover-right .form-control::placeholder {
+    color: var(--auth-text-muted) !important;
+}
+
+.auth-cover-right .form-control:focus {
+    outline: none !important;
+    border-color: #0ce0ff !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 0 0 3px rgba(12, 224, 255, 0.2) !important;
+}
+
+.auth-cover-right .input-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--auth-text-muted) !important;
+    font-size: 18px;
+    transition: color 0.3s ease;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.auth-cover-right .input-group:focus-within .input-icon {
+    color: #0ce0ff !important;
+}
+
+.auth-cover-right .password-toggle-btn {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none !important;
+    border: none !important;
+    color: var(--auth-text-muted) !important;
+    cursor: pointer;
+    padding: 0;
+    font-size: 18px;
+    transition: color 0.3s ease;
+    z-index: 5;
+}
+
+.auth-cover-right .password-toggle-btn:hover {
+    color: var(--auth-text-secondary) !important;
+}
+
+.auth-cover-right .form-label {
+    color: var(--auth-text-secondary) !important;
+}
+
+/* Brand Content */
+.auth-cover-brand {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 0;
+    justify-content: space-between;
+}
+
+.brand-logo {
+    margin-bottom: 60px;
+}
+
+.brand-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.brand-footer {
+    margin-top: 60px;
+}
+
+.auth-card-container {
+    width: 100%;
+    max-width: 480px;
+}
+
+.brand-icon {
+    width: 56px;
+    height: 56px;
+    background: var(--primary-gradient);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(1, 95, 201, 0.4);
+    flex-shrink: 0;
+}
+
+.brand-icon i {
+    font-size: 28px;
+    color: white;
+}
+
+.brand-logo h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
+}
+
+.brand-content h2 {
+    font-weight: 700;
+    color: white;
+    line-height: 1.2;
+}
+
+.brand-content p {
+    color: var(--auth-text-secondary);
+}
+
+.brand-features li {
+    color: var(--auth-text-secondary);
+    font-size: 15px;
+}
+
+.brand-features li i {
+    font-size: 20px;
+    color: #0ce0ff;
+    flex-shrink: 0;
+}
+
+.stat-item h3 {
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-item p {
+    color: var(--auth-text-muted);
+}
+
+/* Responsive */
+@media (max-width: 1199px) {
+    .auth-cover-left {
+        padding: 50px 40px !important;
+    }
+}
+
+@media (max-width: 991px) {
+    .auth-cover-left {
+        padding: 40px 30px !important;
+    }
+    
+    .auth-cover-brand {
+        min-height: auto;
+    }
+    
+    .brand-logo {
+        margin-bottom: 40px;
+    }
+    
+    .brand-footer {
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 576px) {
+    .auth-cover-right {
+        padding: 30px 20px;
+    }
+    
+    .auth-cover-left {
+        padding: 30px 20px !important;
+    }
+}
+
 /* Auth Layout */
 .auth-wrapper {
     min-height: 100vh;

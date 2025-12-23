@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - AdminPro</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23015fc9'/%3E%3Cstop offset='100%25' style='stop-color:%230ce0ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='url(%23g)'/%3E%3Cpath d='M50 25L75 45L75 70L50 85L25 70L25 45Z' fill='white' opacity='0.9'/%3E%3C/svg%3E">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #015fc9 0%, #0ce0ff 100%);
+            --accent-gradient: linear-gradient(135deg, #C115EC 0%, #f5576c 100%);
+            --cyan-gradient: linear-gradient(135deg, #015fc9 0%, #0ce0ff 100%);
+            --green-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --orange-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-bg-hover: rgba(255, 255, 255, 0.12);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-border-hover: rgba(255, 255, 255, 0.25);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --glass-shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.4);
+            --sidebar-width: 280px;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.65);
+            --text-muted: rgba(255, 255, 255, 0.45);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #00022A 0%, #000D33 50%, #00022B 100%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        .bg-animated {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .bg-animated .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.35;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .bg-animated .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, #015fc9, #0077e6);
+            top: -200px;
+            left: -150px;
+            animation-delay: 0s;
+        }
+
+        .bg-animated .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #C115EC, #8b0ab8);
+            top: 40%;
+            right: -100px;
+            animation-delay: -5s;
+        }
+
+        .bg-animated .orb-3 {
+            width: 450px;
+            height: 450px;
+            background: linear-gradient(135deg, #0ce0ff, #00b4d8);
+            bottom: -150px;
+            left: 25%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(30px, -30px) rotate(5deg); }
+            50% { transform: translate(-20px, 20px) rotate(-5deg); }
+            75% { transform: translate(20px, 10px) rotate(3deg); }
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-right: 1px solid var(--glass-border);
+            padding: 28px 20px;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 0 12px 28px;
+            border-bottom: 1px solid var(--glass-border);
+            margin-bottom: 28px;
+        }
+
+        .sidebar-logo .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-gradient);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 8px 24px rgba(1, 95, 201, 0.5);
+        }
+
+        .sidebar-logo .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.8) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+        }
+
+        .nav-item {
+            margin-bottom: 6px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-gradient);
+            border-radius: 0 4px 4px 0;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--glass-bg-hover);
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .nav-link.active::before {
+            transform: scaleY(1);
+        }
+
+        .nav-link i {
+            font-size: 20px;
+            width: 26px;
+            text-align: center;
+        }
+
+        .nav-link span {
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--accent-gradient);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            padding-top: 20px;
+            border-top: 1px solid var(--glass-border);
+            margin-top: auto;
+        }
+
+        .nav-link.logout:hover {
+            background: rgba(239, 68, 68, 0.15);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            padding: 28px;
+        }
+
+        /* Top Navbar */
+        .top-navbar {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 18px 28px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .page-header {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .page-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.85) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 12px 18px 12px 48px;
+            color: var(--text-primary);
+            width: 280px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--glass-border-hover);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        .nav-icon-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        .nav-icon-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .nav-icon-btn .badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 22px;
+            height: 22px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            padding: 8px 16px 8px 8px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .user-profile:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--glass-border);
+        }
+
+        .user-avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 16px;
+            position: relative;
+        }
+
+        .user-avatar::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            background: #43e97b;
+            border-radius: 50%;
+            border: 2px solid rgba(26, 26, 62, 0.8);
+        }
+
+        .user-info {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .user-info {
+                display: block;
+            }
+        }
+
+        .user-info .name {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .user-info .role {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 28px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--glass-border-hover);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        /* Settings Menu */
+        .settings-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            margin-bottom: 6px;
+            border: 1px solid transparent;
+        }
+
+        .settings-menu-item:hover {
+            background: var(--glass-bg);
+            color: var(--text-primary);
+        }
+
+        .settings-menu-item.active {
+            background: var(--glass-bg-hover);
+            color: var(--text-primary);
+            border-color: var(--glass-border);
+        }
+
+        .settings-menu-item i {
+            font-size: 20px;
+            width: 24px;
+        }
+
+        .settings-menu-item span {
+            font-weight: 500;
+        }
+
+        /* Form Styles */
+        .form-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .form-control, .form-select {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 14px 18px;
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-control:focus, .form-select:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #0ce0ff;
+            box-shadow: 0 0 0 3px rgba(12, 224, 255, 0.15);
+        }
+
+        .form-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Toggle Switch */
+        .form-switch .form-check-input {
+            width: 50px;
+            height: 26px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border: none;
+            cursor: pointer;
+        }
+
+        .form-switch .form-check-input:checked {
+            background-color: #0ce0ff;
+        }
+
+        .form-switch .form-check-input:focus {
+            box-shadow: 0 0 0 3px rgba(12, 224, 255, 0.2);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(1, 95, 201, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(1, 95, 201, 0.5);
+        }
+
+        .btn-outline-secondary {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-secondary:hover {
+            background: var(--glass-bg);
+            border-color: var(--glass-border-hover);
+            color: var(--text-primary);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        }
+
+        /* Profile Avatar */
+        .profile-avatar-lg {
+            width: 100px;
+            height: 100px;
+            border-radius: 20px;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 600;
+            color: white;
+            box-shadow: 0 8px 32px rgba(1, 95, 201, 0.4);
+        }
+
+        /* Session Item */
+        .session-item {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 12px;
+        }
+
+        .session-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--primary-gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        /* Theme Options */
+        .theme-option {
+            cursor: pointer;
+            border: 2px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .theme-option:hover {
+            border-color: var(--glass-border-hover);
+            background: var(--glass-bg);
+        }
+
+        .theme-option.active {
+            border-color: #0ce0ff;
+            background: var(--glass-bg);
+        }
+
+        .theme-preview {
+            height: 80px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .theme-dark {
+            background: linear-gradient(135deg, #00022A 0%, #000D33 100%);
+        }
+
+        .theme-light {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .theme-auto {
+            background: linear-gradient(90deg, #00022A 50%, #f8f9fa 50%);
+        }
+
+        .theme-label {
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Color Scheme */
+        .color-scheme-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .color-scheme-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .color-scheme-btn.active {
+            border-color: white;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+        }
+
+        .color-scheme-btn[data-scheme="blue"] { background: var(--primary-gradient); }
+        .color-scheme-btn[data-scheme="purple"] { background: var(--accent-gradient); }
+        .color-scheme-btn[data-scheme="green"] { background: var(--green-gradient); }
+        .color-scheme-btn[data-scheme="orange"] { background: var(--orange-gradient); }
+
+        /* Divider */
+        .divider {
+            border-bottom: 1px solid var(--glass-border);
+            margin: 24px 0;
+        }
+
+        /* Settings Tab */
+        .settings-tab {
+            display: none;
+        }
+
+        .settings-tab.active {
+            display: block;
+        }
+
+        /* Danger Card */
+        .danger-card {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .danger-card .card-title {
+            color: #ef4444;
+        }
+
+        /* Mobile Sidebar Toggle */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: 0 8px 32px rgba(1, 95, 201, 0.5);
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+        }
+
+        /* Responsive */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+
+            .settings-menu-container {
+                display: flex;
+                overflow-x: auto;
+                gap: 8px;
+                padding-bottom: 8px;
+            }
+
+            .settings-menu-item {
+                white-space: nowrap;
+                margin-bottom: 0;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .search-box {
+                display: none;
+            }
+
+            .main-content {
+                padding: 16px;
+            }
+
+            .glass-card {
+                padding: 20px;
+            }
+        }
+
+        /* Dropdown Styles */
+        .dropdown-menu {
+            background: rgba(20, 20, 40, 0.95);
+            backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 10px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .dropdown-item {
+            color: var(--text-secondary);
+            border-radius: 10px;
+            padding: 12px 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+        }
+
+        .dropdown-divider {
+            border-color: var(--glass-border);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animated">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Sidebar Overlay (Mobile) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">
+                <i class="bi bi-hexagon-fill"></i>
+            </div>
+            <span class="logo-text">AdminPro</span>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="index.html" class="nav-link">
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="customers.html" class="nav-link">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Customers</span>
+                    <span class="nav-badge">128</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="analytics.html" class="nav-link">
+                    <i class="bi bi-bar-chart-fill"></i>
+                    <span>Analytics</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="orders.html" class="nav-link">
+                    <i class="bi bi-cart-fill"></i>
+                    <span>Orders</span>
+                    <span class="nav-badge">24</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="messages.html" class="nav-link">
+                    <i class="bi bi-chat-dots-fill"></i>
+                    <span>Messages</span>
+                    <span class="nav-badge">7</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="bi bi-folder-fill"></i>
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="bi bi-calendar-event-fill"></i>
+                    <span>Calendar</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="settings.html" class="nav-link active">
+                    <i class="bi bi-gear-fill"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="auth-login.html" class="nav-link logout">
+                <i class="bi bi-box-arrow-left"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navbar -->
+        <nav class="top-navbar">
+            <div class="page-header">
+                <h1 class="page-title">Settings</h1>
+                <p class="page-subtitle">Manage your account settings and preferences</p>
+            </div>
+            <div class="navbar-actions">
+                <div class="search-box">
+                    <i class="bi bi-search"></i>
+                    <input type="text" placeholder="Search settings...">
+                </div>
+                <div class="nav-icon-btn">
+                    <i class="bi bi-bell-fill"></i>
+                    <span class="badge">5</span>
+                </div>
+                <div class="dropdown">
+                    <div class="user-profile" data-bs-toggle="dropdown">
+                        <div class="user-avatar">JD</div>
+                        <div class="user-info">
+                            <div class="name">John Doe</div>
+                            <div class="role">Administrator</div>
+                        </div>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i>My Profile</a></li>
+                        <li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear"></i>Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="auth-login.html"><i class="bi bi-box-arrow-left"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Settings Content -->
+        <div class="row g-4">
+            <!-- Settings Menu -->
+            <div class="col-lg-3">
+                <div class="glass-card">
+                    <div class="settings-menu-container">
+                        <a href="#" class="settings-menu-item active" data-tab="profile">
+                            <i class="bi bi-person"></i>
+                            <span>Profile</span>
+                        </a>
+                        <a href="#" class="settings-menu-item" data-tab="account">
+                            <i class="bi bi-shield-check"></i>
+                            <span>Account</span>
+                        </a>
+                        <a href="#" class="settings-menu-item" data-tab="security">
+                            <i class="bi bi-lock"></i>
+                            <span>Security</span>
+                        </a>
+                        <a href="#" class="settings-menu-item" data-tab="notifications">
+                            <i class="bi bi-bell"></i>
+                            <span>Notifications</span>
+                        </a>
+                        <a href="#" class="settings-menu-item" data-tab="appearance">
+                            <i class="bi bi-palette"></i>
+                            <span>Appearance</span>
+                        </a>
+                        <a href="#" class="settings-menu-item" data-tab="privacy">
+                            <i class="bi bi-eye-slash"></i>
+                            <span>Privacy</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Panels -->
+            <div class="col-lg-9">
+                <!-- Profile Tab -->
+                <div class="settings-tab active" id="profile-tab">
+                    <div class="glass-card mb-4">
+                        <h5 class="card-title">Profile Information</h5>
+                        
+                        <!-- Profile Picture -->
+                        <div class="d-flex align-items-center gap-4 mb-4 pb-4" style="border-bottom: 1px solid var(--glass-border);">
+                            <div class="profile-avatar-lg">JD</div>
+                            <div>
+                                <button class="btn btn-primary btn-sm mb-2 me-2">
+                                    <i class="bi bi-upload me-2"></i>Upload
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm mb-2">
+                                    <i class="bi bi-trash me-2"></i>Remove
+                                </button>
+                                <p class="small text-muted mb-0 mt-2">JPG, GIF or PNG. Max size 800KB</p>
+                            </div>
+                        </div>
+
+                        <!-- Profile Form -->
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" class="form-control" value="John">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" value="Doe">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" value="john.doe@example.com">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" value="+1 (555) 123-4567">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Bio</label>
+                                <textarea class="form-control" placeholder="Tell us about yourself...">Admin user with full access to the system.</textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Company</label>
+                                    <input type="text" class="form-control" value="AdminPro Inc.">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Website</label>
+                                    <input type="url" class="form-control" value="https://example.com">
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end gap-2 mt-3">
+                                <button type="button" class="btn btn-outline-secondary">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Account Tab -->
+                <div class="settings-tab" id="account-tab">
+                    <div class="glass-card mb-4">
+                        <h5 class="card-title">Account Settings</h5>
+                        <form>
+                            <div class="mb-3">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" value="johndoe">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-control" value="john.doe@example.com">
+                                <small class="text-muted">Your email address is verified ✓</small>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Language</label>
+                                <select class="form-select">
+                                    <option selected>English</option>
+                                    <option>Spanish</option>
+                                    <option>French</option>
+                                    <option>German</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Timezone</label>
+                                <select class="form-select">
+                                    <option selected>UTC-05:00 Eastern Time</option>
+                                    <option>UTC-08:00 Pacific Time</option>
+                                    <option>UTC+00:00 UTC</option>
+                                    <option>UTC+05:30 India Standard Time</option>
+                                </select>
+                            </div>
+                            <div class="d-flex justify-content-end gap-2 mt-3">
+                                <button type="button" class="btn btn-outline-secondary">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="glass-card danger-card">
+                        <h5 class="card-title">Delete Account</h5>
+                        <p class="text-muted mb-3">Once you delete your account, there is no going back. Please be certain.</p>
+                        <button class="btn btn-danger">
+                            <i class="bi bi-trash me-2"></i>Delete Account
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Security Tab -->
+                <div class="settings-tab" id="security-tab">
+                    <div class="glass-card mb-4">
+                        <h5 class="card-title">Change Password</h5>
+                        <form>
+                            <div class="mb-3">
+                                <label class="form-label">Current Password</label>
+                                <input type="password" class="form-control" placeholder="Enter current password">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">New Password</label>
+                                <input type="password" class="form-control" placeholder="Enter new password">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Confirm New Password</label>
+                                <input type="password" class="form-control" placeholder="Confirm new password">
+                            </div>
+                            <div class="d-flex justify-content-end gap-2 mt-3">
+                                <button type="button" class="btn btn-outline-secondary">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Update Password</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="glass-card mb-4">
+                        <h5 class="card-title">Two-Factor Authentication</h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">Enable 2FA</h6>
+                                <p class="text-muted small mb-0">Add an extra layer of security</p>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card">
+                        <h5 class="card-title">Active Sessions</h5>
+                        <div class="session-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="d-flex gap-3">
+                                    <div class="session-icon">
+                                        <i class="bi bi-laptop"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Windows • Chrome</h6>
+                                        <p class="text-muted small mb-0">New York, USA • Active now</p>
+                                    </div>
+                                </div>
+                                <span class="badge bg-success">Current</span>
+                            </div>
+                        </div>
+                        <div class="session-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="d-flex gap-3">
+                                    <div class="session-icon">
+                                        <i class="bi bi-phone"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">iPhone • Safari</h6>
+                                        <p class="text-muted small mb-0">Los Angeles, USA • 2 hours ago</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-secondary btn-sm">Revoke</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications Tab -->
+                <div class="settings-tab" id="notifications-tab">
+                    <div class="glass-card">
+                        <h5 class="card-title">Notification Preferences</h5>
+                        
+                        <h6 class="mb-3 mt-4">Email Notifications</h6>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <div class="fw-medium">Order Updates</div>
+                                <small class="text-muted">Get notified when orders are placed</small>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" checked>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <div class="fw-medium">Weekly Reports</div>
+                                <small class="text-muted">Receive weekly activity summary</small>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" checked>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <div class="fw-medium">Marketing Emails</div>
+                                <small class="text-muted">Receive news and special offers</small>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox">
+                            </div>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <h6 class="mb-3">Push Notifications</h6>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <div class="fw-medium">Messages</div>
+                                <small class="text-muted">Get notified of new messages</small>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" checked>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <div class="fw-medium">Comments</div>
+                                <small class="text-muted">Get notified when someone comments</small>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" checked>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-outline-secondary">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Preferences</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Appearance Tab -->
+                <div class="settings-tab" id="appearance-tab">
+                    <div class="glass-card">
+                        <h5 class="card-title">Appearance Settings</h5>
+                        
+                        <label class="form-label mb-3">Theme</label>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-4">
+                                <div class="theme-option active" data-theme="dark">
+                                    <div class="theme-preview theme-dark"></div>
+                                    <div class="theme-label">Dark</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="theme-option" data-theme="light">
+                                    <div class="theme-preview theme-light"></div>
+                                    <div class="theme-label">Light</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="theme-option" data-theme="auto">
+                                    <div class="theme-preview theme-auto"></div>
+                                    <div class="theme-label">Auto</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="form-label mb-3">Color Scheme</label>
+                        <div class="d-flex gap-3 mb-4">
+                            <button class="color-scheme-btn active" data-scheme="blue"></button>
+                            <button class="color-scheme-btn" data-scheme="purple"></button>
+                            <button class="color-scheme-btn" data-scheme="green"></button>
+                            <button class="color-scheme-btn" data-scheme="orange"></button>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="fw-medium">Compact Mode</div>
+                                <small class="text-muted">Reduce spacing and padding</small>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox">
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-outline-secondary">Reset</button>
+                            <button type="submit" class="btn btn-primary">Apply Changes</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Privacy Tab -->
+                <div class="settings-tab" id="privacy-tab">
+                    <div class="glass-card">
+                        <h5 class="card-title">Privacy Settings</h5>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <div class="fw-medium">Profile Visibility</div>
+                                <small class="text-muted">Control who can see your profile</small>
+                            </div>
+                            <select class="form-select" style="width: auto;">
+                                <option selected>Everyone</option>
+                                <option>Connections Only</option>
+                                <option>Only Me</option>
+                            </select>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <div class="fw-medium">Activity Status</div>
+                                <small class="text-muted">Show when you're active</small>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" checked>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <div class="fw-medium">Read Receipts</div>
+                                <small class="text-muted">Let others know when you've read messages</small>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" checked>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <div class="fw-medium">Data Collection</div>
+                                <small class="text-muted">Help improve by sharing anonymous data</small>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox">
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-outline-secondary">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Settings</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Mobile Sidebar Toggle -->
+    <button class="sidebar-toggle" id="sidebarToggle">
+        <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Settings Tab Navigation
+        document.querySelectorAll('.settings-menu-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active from all
+                document.querySelectorAll('.settings-menu-item').forEach(i => i.classList.remove('active'));
+                document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+                
+                // Add active to clicked
+                this.classList.add('active');
+                document.getElementById(this.dataset.tab + '-tab').classList.add('active');
+            });
+        });
+
+        // Theme Options
+        document.querySelectorAll('.theme-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.theme-option').forEach(o => o.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Color Scheme
+        document.querySelectorAll('.color-scheme-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.color-scheme-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Mobile Sidebar
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+        });
+
+        sidebarOverlay.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+        });
+    </script>
+</body>
+</html>
